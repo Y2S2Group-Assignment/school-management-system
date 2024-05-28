@@ -45,11 +45,13 @@
                                     </a>
                                 </div>
 
+                                
+                                <div class="table-responsive">
                                 <?php
                                     alertMessage();
                                 ?>
 
-                                <div class="table-responsive">
+                                    <hr>
                                     <table class="table table-striped">
                                         <thead>
                                             <tr>

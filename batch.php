@@ -48,10 +48,11 @@
                                
 
                                 <div class="table-responsive">
-                                    <hr>
-                                    <?php
+                                <?php
                                     alertMessage();
                                 ?>
+                                    <hr>
+                                   
                                     <table class="table table-striped">
                                         <thead>
                                             <tr>
