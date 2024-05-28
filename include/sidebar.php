@@ -108,7 +108,7 @@
           <p>BIU Detail</p>
           <span></span>
         </li>
-        <li class="nav-item">
+        <!-- <li class="nav-item">
           <a class="nav-link" data-toggle="collapse" href="#ba" aria-expanded="false" aria-controls="ui-basic">
             <i class="mdi mdi-palette menu-icon"></i>
             <span class="menu-title">Student Batch</span>
@@ -117,10 +117,10 @@
           <div class="collapse" id="ba">
             <ul class="nav flex-column sub-menu">
               <li class="nav-item"> <a class="nav-link" href="#">New Batch</a></li>
-              <!-- <li class="nav-item"> <a class="nav-link" href="pages/ui-features/typography.html">Typography</a></li> -->
+              <li class="nav-item"> <a class="nav-link" href="pages/ui-features/typography.html">Typography</a></li>
             </ul>
           </div>
-        </li>
+        </li> -->
        
         <li class="nav-item">
           <a class="nav-link" data-toggle="collapse" href="#faculty" aria-expanded="false" aria-controls="ui-basic">
@@ -133,6 +133,8 @@
               <li class="nav-item"> <a class="nav-link" href="faculty.php">All Faculty</a></li>
               <li class="nav-item"> <a class="nav-link" href="major.php">All Major</a></li>
               <li class="nav-item"> <a class="nav-link" href="subject.php">All Subject</a></li>
+              <li class="nav-item"> <a class="nav-link" href="batch.php">All Batch</a></li>
+
               <!-- <li class="nav-item"> <a class="nav-link" href="pages/ui-features/typography.html">Typography</a></li> -->
             </ul>
           </div>

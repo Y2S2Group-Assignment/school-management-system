@@ -38,6 +38,7 @@
 
     }
 
+
     if(isset($_POST['c_major']))
     {
         $id = $_POST['MajorID'];
@@ -102,6 +103,39 @@
         {
             $_SESSION['status'] = "Proccessing Successfully.";
             header("Location: subject.php");
+            exit();
+        }
+        else
+        {
+            echo "alert('Error: ') " . $sql . ":-" . mysqli_error($conn);
+        }
+        mysqli_close($conn);
+
+    }
+
+    if(isset($_POST['c_batch']))
+    {
+        $id = $_POST['BatchID'];
+        $BatchKH = $_POST['BatchKH'];
+        $BatchEN = $_POST['BatchEN'];
+        
+
+        if (!empty($id)) {
+            // Update operation
+            $sql = "UPDATE tblbatch SET BatchKH ='$BatchKH', BatchEN ='$BatchEN' WHERE BatchID = $id ";
+            
+        } 
+        else {
+            // Insert operation
+            $sql = "INSERT INTO tblbatch (BatchKH,BatchEN ) 
+            VALUES ('$BatchKH', '$BatchEN')";
+        
+        }
+
+        if(mysqli_query($conn, $sql))
+        {
+            $_SESSION['status'] = "Proccessing Successfully.";
+            header("Location: batch.php");
             exit();
         }
         else

@@ -20,49 +20,38 @@
             <?php 
                 include('./include/nav.php');
             ?>
-
+            
             <?php
-                include_once ("./connection/conn.php");
+                // session_start();
+                include './connection/conn.php';
+            
+              
 
-                if (isset($_GET['get'])) {
-                $Batch = $_GET['get'];
-                $query = "SELECT * FROM tblstudentinfo WHERE BatchID = $Batch ";
-                $result = mysqli_query($conn, $query);
-                $row = mysqli_fetch_assoc($result);
-                
+                $sql = " SELECT * FROM tblbatch ";
+                $result = mysqli_query($conn, $sql);
+                $i = 1;
 
-                }
             ?>
-            
-            
             <!-- partial -->
             <div class="main-panel">
                 <div class="content-wrapper">
                     <div class="col-lg-12 grid-margin stretch-card">
                         <div class="card">
                             <div class="card-body">
-                                <h4 class="card-title pb-3">Faculty List</h4>
-                                <!-- <div class="pt-3 pb-3">
-                                    <a href="c_faculty.php">
-                                        <button type="button" class="btn btn-primary w-15">Add New Faculty</button>
+                                <h4 class="card-title">Batch List</h4>
+                                <div class="pt-3 pb-3">
+                                    <a href="c_batch.php">
+                                        <button type="button" class="btn btn-primary w-15 float-right">Add New Batch</button>
                                     </a>
-                                </div> -->
-                                <input type="hidden" name="BatchEN"
-                                value=" <?php echo isset($row['BatchID']) ?>" >
+                                </div>
 
-                                <?php
+                               
+
+                                <div class="table-responsive">
+                                    <hr>
+                                    <?php
                                     alertMessage();
                                 ?>
-                                <?php
-                                    // session_start();
-                                    include './connection/conn.php';
-                                
-                                    $sql = " SELECT * FROM tblfaculty";
-                                    $result = mysqli_query($conn, $sql);
-                                    $i = 1;
-
-                                ?>
-                                <div class="table-responsive">
                                     <table class="table table-striped">
                                         <thead>
                                             <tr>
@@ -70,14 +59,14 @@
                                                     N0.
                                                 </th>
                                                 <th>
-                                                    Faculty Name KH
+                                                    Batch Name KH
                                                 </th>
                                                 <th>
-                                                    Faculty Name EN
+                                                    Batch Name EN
                                                 </th>
-                                                <!-- <th>
+                                                <th>
                                                     DateTime
-                                                </th> -->
+                                                </th>
                                                 <th>
                                                     Action
                                                 </th>
@@ -85,48 +74,32 @@
                                         </thead>
                                         <tbody>
                                             <?php
-                                            while ($subrow = mysqli_fetch_assoc($result)) {
+                                            while ($row = mysqli_fetch_assoc($result)) {
                                                 ?>
                                                 <tr>
                                                     <td class="py-1">
                                                         <?= $i++ ?>.
+                                                        
                                                     </td>
                                                     <td>
-                                                        <?= $subrow['FacultyKH'] ?>
+                                                        <?= $row['BatchKH'] ?>
                                                     </td>
                                                     <td>
-                                                        <?= $subrow['FacultyEN'] ?>
+                                                        <?= $row['BatchEN'] ?>
                                                     </td>
-                                                   
-                                                    <?php
-                                                        // session_start();
-                                                        include './connection/conn.php';
-                                                    
-                                                        $sql = " SELECT * FROM tblmajor WHERE FacultyID ";
-                                                        $result = mysqli_query($conn, $sql);
-                                                        $i = 1;
-
-                                                    ?>
                                                     <td>
-                         
-                                                        <div class="btn-group">
-                                                            <button type="button" class="btn btn-outline-secondary dropdown-toggle" data-toggle="dropdown">Dropdown</button>
-                                                            <div class="dropdown-menu">
-                                                                <?php
-                                                                while ($sub1row = mysqli_fetch_assoc($result)) {
-                                                                    // $row['BatchID'] = $sub1row['MajorID'];
-                                                                    ?>
-                                                                
-                                                                    <a class="dropdown-item" href="studentInfo.php?get<?php echo $sub1row['MajorID']; ?> ">
-                                                                        <?= $sub1row['MajorEN'] ?>
-                                                                    </a>
-                                                                    
-                                                                    
-                                                                <?php } ?> 
-                                                            </div>                         
-                                                        </div>
-                                                    
-                                                    
+                                                        <?= $row['datetime'] ?>
+                                                    </td>
+                                                    <td>
+                                                        <a href="c_batch.php?edit_batch=<?php echo $row['BatchID'] ?> ">
+                                                            <button class="btn btn-outline-primary btn-sm edit_borrower"
+                                                                type="button"><i class="fa fa-edit">
+                                                                </i></button>
+                                                        </a>
+                                                        <a href="action.php?d_batch=<?php echo $row['BatchID'] ?>" >
+                                                            <button class="btn btn-outline-danger btn-sm delete_borrower"
+                                                                type="button"><i class="fa fa-trash"></i></button>
+                                                        </a>
                                                     </td>
                                                 </tr>
 
@@ -176,7 +149,6 @@
 </body>
 
 </html>
-
 <script>
     $('.alert').alert();
 </script>
