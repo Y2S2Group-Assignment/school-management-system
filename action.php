@@ -4,6 +4,122 @@
 
     include './connection/conn.php';
     
+    if(isset($_POST['c_schedule']))
+    {
+        $id = $_POST['ScheduleID'];
+        $SubjectID = $_POST['SubjectID'];
+        $LecturerID = $_POST['LecturerID'];
+        $DayWeekID = $_POST['DayWeekID'];
+        $TimeID = $_POST['TimeID'];
+        $RoomID = $_POST['RoomID'];
+        $ProgramID = $_POST['ProgramID'];
+        $DateStart = $_POST['DateStart'];
+        $DateEnd = $_POST['DateEnd'];
+        $ScheduleDate = $_POST['ScheduleDate'];
+        
+
+        if (!empty($id)) {
+            // Update operation
+            $sql = "UPDATE tblschedule SET SubjectID ='$SubjectID', LecturerID ='$LecturerID', DayWeekID ='$DayWeekID',
+            TimeID ='$TimeID', RoomID ='$RoomID', ProgramID ='$ProgramID',
+            DateStart ='$DateStart', DateEnd ='$DateEnd', ScheduleDate ='$ScheduleDate',  
+            WHERE ScheduleID = $id ";
+            
+        } 
+        else {
+            // Insert operation
+            $sql = "INSERT INTO tblschedule (SubjectID,LecturerID,DayWeekID ,TimeID ,RoomID ,ProgramID ,DateStart ,DateEnd,ScheduleDate  ) 
+            VALUES ('$SubjectID', '$LecturerID','$DayWeekID', '$TimeID','$RoomID', '$ProgramID','$DateStart', '$DateEnd','$ScheduleDate')";
+        
+        }
+
+        if(mysqli_query($conn, $sql))
+        {
+            $_SESSION['status'] = "Proccessing Successfully.";
+            header("Location: schedule.php");
+            exit();
+        }
+        else
+        {
+            echo "alert('Error: ') " . $sql . ":-" . mysqli_error($conn);
+        }
+        mysqli_close($conn);
+
+    }
+
+    if(isset($_POST['c_subjectfail']))
+    {
+        $id = $_POST['SubjectFallID'];
+        $StudentStatusID = $_POST['StudentStatusID'];
+        $ScheduleID = $_POST['ScheduleID'];
+        $DateSubjectFall = $_POST['DateSubjectFall'];
+        
+
+        if (!empty($id)) {
+            // Update operation
+            $sql = "UPDATE tblsubjectfall SET StudentStatusID ='$StudentStatusID', ScheduleID ='$ScheduleID'
+            , DateSubjectFall ='$DateSubjectFall'
+             WHERE SubjectFallID = $id ";
+            
+        } 
+        else {
+            // Insert operation
+            $sql = "INSERT INTO tblsubjectfall (StudentStatusID,ScheduleID, DateSubjectFall) 
+            VALUES ('$StudentStatusID', '$ScheduleID' , '$DateSubjectFall')";
+        
+        }
+
+        if(mysqli_query($conn, $sql))
+        {
+            $_SESSION['status'] = "Proccessing Successfully.";
+            header("Location: subjectfail.php");
+            exit();
+        }
+        else
+        {
+            echo "alert('Error: ') " . $sql . ":-" . mysqli_error($conn);
+        }
+        mysqli_close($conn);
+
+    }
+
+    if(isset($_POST['c_lecturer']))
+    {
+        $id = $_POST['LecturerID'];
+        $LecturerName = $_POST['LecturerName'];
+        $LecturerEN = $_POST['LecturerEN'];
+        $SexID = $_POST['SexID'];
+      
+        
+
+        if (!empty($id)) {
+            // Update operation
+            $sql = "UPDATE tbllecturer SET LecturerName ='$LecturerName', LecturerEN ='$LecturerEN',SexID='$SexID'
+       
+             WHERE LecturerID = $id ";
+            
+        } 
+        else {
+            // Insert operation
+            $sql = "INSERT INTO tbllecturer (LecturerName,LecturerEN,SexID) 
+            VALUES ('$LecturerName', '$LecturerEN' ,'$SexID')";
+        
+        }
+
+        if(mysqli_query($conn, $sql))
+        {
+            $_SESSION['status'] = "Proccessing Successfully.";
+            header("Location: lecturer.php");
+            exit();
+        }
+        else
+        {
+            echo "alert('Error: ') " . $sql . ":-" . mysqli_error($conn);
+        }
+        mysqli_close($conn);
+
+    }
+
 
     if(isset($_POST['c_faculty']))
     {
@@ -144,6 +260,53 @@
         }
         mysqli_close($conn);
 
+    }
+    
+    if(isset($_GET['d_schedule']))
+    {
+        $delete = $_GET['d_schedule'];
+
+        $sql = "DELETE FROM tblschedule WHERE ScheduleID = $delete";
+        
+        if (mysqli_query($conn, $sql)) {
+            $_SESSION['status'] = "Proccessing Successfully.";
+            header("Location: schedule.php");
+            exit();
+        } else {
+            echo "Error: " . $sql . ":-" . mysqli_error($conn);
+        }
+        mysqli_close($conn);
+    }
+    if(isset($_GET['d_subjectfail']))
+    {
+        $delete = $_GET['d_subjectfail'];
+
+        $sql = "DELETE FROM tblsubjectfall WHERE SubjectFallID = $delete";
+        
+        if (mysqli_query($conn, $sql)) {
+            $_SESSION['status'] = "Proccessing Successfully.";
+            header("Location: c_subjectfail.php");
+            exit();
+        } else {
+            echo "Error: " . $sql . ":-" . mysqli_error($conn);
+        }
+        mysqli_close($conn);
+    }
+    
+    if(isset($_GET['d_lecturer']))
+    {
+        $delete = $_GET['d_lecturer'];
+
+        $sql = "DELETE FROM tbllecturer WHERE LecturerID = $delete";
+        
+        if (mysqli_query($conn, $sql)) {
+            $_SESSION['status'] = "Proccessing Successfully.";
+            header("Location: lecturer.php");
+            exit();
+        } else {
+            echo "Error: " . $sql . ":-" . mysqli_error($conn);
+        }
+        mysqli_close($conn);
     }
 
     if(isset($_GET['d_subject']))
@@ -471,7 +634,7 @@
         if(mysqli_query($conn, $sql))
         {
             $_SESSION['status'] = "Proccessing Successfully.";
-            header("Location: stuList.php");
+            header("Location: statusList.php");
             exit();
         }
         else

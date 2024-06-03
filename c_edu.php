@@ -120,8 +120,7 @@ include ('./include/header.php');
                       </div>
                       <div class="col-md-4">
                         <div class="form-group row">
-                        <input type="hidden" name="EducationalBackgroundID"
-                            value="<?php echo isset($row['StudentStatusID']) ? $row['StudentStatusID'] : '' ?>">
+                        
 
                           <div class="col-sm-12">
                             <label for="exampleInputUsername1">Student</label>

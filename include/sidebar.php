@@ -49,61 +49,37 @@
           </a>
         </li>
 
-        <!-- <?php            
-          include './connection/conn.php';
-      
-          $sql = " SELECT * FROM tblbatch ";
-          $result = mysqli_query($conn, $sql);
-        
-        ?>
-
+        <li class="nav-item sidebar-category">
+          <p>Student Schedule</p>
+          <span></span>
+        </li>
         <li class="nav-item">
-          <a class="nav-link" data-toggle="collapse" href="#view" aria-expanded="false" aria-controls="view">
+          <a class="nav-link" href="schedule.php">
+            <i class="mdi mdi-grid-large menu-icon"></i>
+            <span class="menu-title">Schedule</span>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" data-toggle="collapse" href="#subjects" aria-expanded="false" aria-controls="subjects">
             <i class="mdi mdi-clipboard-text"></i>
-            <span class="menu-title pl-3">Student View</span>
+            <span class="menu-title pl-3">Student Subject</span>
             <i class="menu-arrow"></i>
           </a>
-          <?php
-            while ($row = mysqli_fetch_assoc($result)) {
-              ?>
-               <input type="hidden" name="BatchEN"
-                      value=" <?php echo isset($row['BatchID']) ?>" >
-                <div class="collapse" id="view">
-                  <ul class="nav flex-column sub-menu">
-                    <li class="nav-item">
-                      <a class="nav-link" href="batch.php?get=<?php echo $row['BatchID']; ?> ">
-                        <?= $row['BatchEN'] ?>
-                      </a>
-                    </li>
-                  
-                  </ul>
-                </div>
-          <?php } ?>
-        </li> -->
-        <!-- <li class="nav-item">
-          <a class="nav-link" href="pages/forms/basic_elements.html">
-            <i class="mdi mdi-view-headline menu-icon"></i>
-            <span class="menu-title">Form elements</span>
-          </a>
+          <div class="collapse" id="subjects">
+            <ul class="nav flex-column sub-menu">
+              <li class="nav-item"> <a class="nav-link" href="c_subjectfail.php">Subject Fail Form</a></li>
+              <!-- <li class="nav-item"> <a class="nav-link" href="c_edu.php">Education Form</a></li>
+              <li class="nav-item"> <a class="nav-link" href="c_family.php">Family Form</a></li> -->
+              <!-- <li class="nav-item"> <a class="nav-link" href="c_status.php">Student Status Form</a></li> -->
+            </ul>
+          </div>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="pages/charts/chartjs.html">
-            <i class="mdi mdi-chart-pie menu-icon"></i>
-            <span class="menu-title">Charts</span>
-          </a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="pages/tables/basic-table.html">
-            <i class="mdi mdi-grid-large menu-icon"></i>
-            <span class="menu-title">Tables</span>
-          </a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="pages/icons/mdi.html">
+          <a class="nav-link" href="lecturer.php">
             <i class="mdi mdi-emoticon menu-icon"></i>
-            <span class="menu-title">Icons</span>
+            <span class="menu-title">Lecturer</span>
           </a>
-        </li> -->
+        </li>
         <li class="nav-item sidebar-category">
           <p>BIU Detail</p>
           <span></span>
@@ -139,6 +115,7 @@
             </ul>
           </div>
         </li>
+       
         <li class="nav-item sidebar-category">
           <p>Pages</p>
           <span></span>

@@ -282,6 +282,16 @@
                         <div class="form-group row">
                           
                           <div class="col-sm-12">
+                          <label for="exampleInputUsername1">Family Current Address</label>
+                            <input type="text" class="form-control border border-primary " id="exampleInputUsername1" name="FamilyCurrentAddress"
+                            placeholder="Family Current Address"  value="<?php echo isset($row['FamilyCurrentAddress']) ? $row['FamilyCurrentAddress'] : '' ?>">
+                          </div>
+                        </div>
+                      </div>
+                      <div class="col-md-4">
+                        <div class="form-group row">
+                          
+                          <div class="col-sm-12">
                           <label for="exampleInputUsername1">Spouse Age</label>
                             <input type="text" class="form-control border border-primary " id="exampleInputUsername1" name="SpouseAge"
                             placeholder="Spouse Age"  value="<?php echo isset($row['SpouseAge']) ? $row['SpouseAge'] : '' ?>">
@@ -303,8 +313,7 @@
                     <div class="row">
                     <div class="col-md-4">
                         <div class="form-group row">
-                        <input type="hidden" name="EducationalBackgroundID"
-                            value="<?php echo isset($row['StudentStatusID']) ? $row['StudentStatusID'] : '' ?>">
+                       
 
                           <div class="col-sm-12">
                             <label for="exampleInputUsername1">Student</label>

@@ -25,7 +25,7 @@
                 // session_start();
                 include './connection/conn.php';
         
-                $sql = " SELECT * FROM tblstudentinfo ORDER BY StudentID DESC";
+                $sql = " SELECT * FROM tbllecturer WHERE LecturerID";
                 $result = mysqli_query($conn, $sql);
                 $i = 1;
 
@@ -36,10 +36,10 @@
                     <div class="col-lg-12 grid-margin stretch-card">
                         <div class="card">
                             <div class="card-body">
-                                <h4 class="card-title">Student List</h4>
+                                <h4 class="card-title">Lecturer List</h4>
                                 <div class="pt-3 pb-3">
-                                    <a href="c_information.php">
-                                        <button type="button" class="btn btn-primary w-15 float-right">Add New Student</button>
+                                    <a href="c_lecturer.php">
+                                        <button type="button" class="btn btn-primary w-15 float-right">Add New Lecturer</button>
                                     </a>
                                 </div>
 
@@ -57,20 +57,15 @@
                                                     N0.
                                                 </th>
                                                 <th>
-                                                    Student Photo
+                                                    Lecturer Khmer Name
                                                 </th>
                                                 <th>
-                                                    Khmer Name
-                                                </th>
-                                                <th>
-                                                    Latin Name
+                                                    Lecturer Khmer Name
                                                 </th>
                                                 <th>
                                                     Gender
                                                 </th>
-                                                <th>
-                                                    Contact
-                                                </th>
+                                               
                                                 <th>
                                                     Action
                                                 </th>
@@ -83,17 +78,14 @@
                                                 ?>
                                                 <tr>
                                                     <td class="py-1">
-                                                        <b><?= $row['StudentID'] ?>.</b>
+                                                        <b><?= $i++ ?>.</b>
+                                                    </td>
+                                                    
+                                                    <td>
+                                                        <b><?= $row['LecturerName'] ?></b>
                                                     </td>
                                                     <td>
-                                                        <img src="./image/<?= $row['Photo'] ?>">
-                                                        
-                                                    </td>
-                                                    <td>
-                                                        <b><?= $row['NameInKhmer'] ?></b>
-                                                    </td>
-                                                    <td>
-                                                        <b><?= $row['NameInLatin'] ?></b>
+                                                        <b><?= $row['LecturerEN'] ?></b>
                                                     </td>
                                                     <?php 
                                                        
@@ -107,46 +99,19 @@
                                                             </b>
                                                         </td>
                                                     <?php } ?>
-                                                    <td>
-                                                        <b><?= $row['PhoneNumber'] ?></b>
-                                                    </td>
+                                                   
                                                    
                                                     <td>
-                                                        
-                                                            <!-- <button class="btn btn-outline-primary btn-sm edit_borrower"
+                                                        <a href="c_lecturer.php?edit_lecturer=<?php echo $row['LecturerID'] ?> ">
+                                                            <button class="btn btn-outline-primary btn-sm edit_borrower"
                                                                 type="button"><i class="fa fa-edit">
-                                                                </i></button> -->
-                                                                <div class="btn-group">
-                                                                    <button type="button" class="btn btn-outline-secondary dropdown-toggle" data-toggle="dropdown">Dropdown</button>
-                                                                    <div class="dropdown-menu">
-                                                                    <a class="dropdown-item" href="c_information.php?edit_student=<?php echo $row['StudentID'] ?> ">
-                                                                    1. Edit Information
-                                                                </a>
-                                                                    <a class="dropdown-item" href="c_edu.php?edit_edu=<?php echo $row['StudentID'] ?> ">
-                                                                        2. Edit Educational
-                                                                    </a>
-                                                                    <a class="dropdown-item" href="c_family.php?edit_family=<?php echo $row['StudentID'] ?> ">
-                                                                        3. Edit FamilyBackground
-                                                                    </a>
-                                                                    <a class="dropdown-item" href="c_subjectfail.php?edit_subjectfail=<?php echo $row['StudentID'] ?> ">
-                                                                        4. Edit Student Subject
-                                                                    </a>
-                                                                    <a  class="dropdown-item" href="action.php?d_stuinfo=<?php echo $row['StudentID'] ?>">
-                                                                    5. Delete
-                                                                    </a>
-                                                                   
-                                                                  
-                                                                    </div>                          
-                                                                </div>
-                                                                <a href="stuDetail.php?stuDetail=<?php echo $row['StudentID'] ?> ">
-                                                                    <button type="button" class="btn btn-primary">Detail</button>
-                                                                </a>
-                                                               
-                                                        
-                                                        <!-- <a href="" data-toggle="modal" data-target="#alert">
+                                                                </i></button>
+                                                        </a>
+                                                        <a href="action.php?d_lecturer=<?php echo $row['LecturerID'] ?>" >
                                                             <button class="btn btn-outline-danger btn-sm delete_borrower"
                                                                 type="button"><i class="fa fa-trash"></i></button>
-                                                        </a> -->
+                                                        </a>
+                                                          
                                                     </td>
                                                 </tr>
 

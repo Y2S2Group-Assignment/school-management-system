@@ -96,7 +96,7 @@
                                                                 type="button"><i class="fa fa-edit">
                                                                 </i></button>
                                                         </a>
-                                                        <a href="action.php?d_faculty=<?php echo $row['FacultyID'] ?>" data-toggle="modal" data-target="#alert">
+                                                        <a href="action.php?d_faculty=<?php echo $row['FacultyID'] ?>">
                                                             <button class="btn btn-outline-danger btn-sm delete_borrower"
                                                                 type="button"><i class="fa fa-trash"></i></button>
                                                         </a>

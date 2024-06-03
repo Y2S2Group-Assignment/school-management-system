@@ -271,7 +271,7 @@ include ('./include/header.php');
 
                                                     <div class="col-sm-12">
                                                         <label for="exampleInputUsername1">Start Date</label>
-                                                        <input type="text" class="form-control border border-primary "
+                                                        <input type="date" class="form-control border border-primary "
                                                             id="exampleInputUsername1" placeholder="Start Date"name="StartDate"
                                                             value="<?php echo isset($row['StartDate']) ? $row['StartDate'] : '' ?>">
                                                     </div>
@@ -289,8 +289,9 @@ include ('./include/header.php');
 
                                                     <div class="col-sm-12">
                                                         <label for="exampleInputUsername1">End Date</label>
-                                                        <input type="text" class="form-control border border-primary "
+                                                        <input type="date" class="form-control border border-primary "
                                                             id="exampleInputUsername1" placeholder="End Date" name="EndDate"
+                                                         
                                                             value="<?php echo isset($row['EndDate']) ? $row['EndDate'] : '' ?>">
                                                     </div>
                                                 </div>

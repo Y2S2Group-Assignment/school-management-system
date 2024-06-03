@@ -194,7 +194,7 @@ include ('./include/header.php');
 
                           <div class="col-sm-12">
                             <label for="exampleInputUsername1">Date of Birth</label>
-                            <input type="text" class="form-control border border-primary " id="exampleInputUsername1"
+                            <input type="date" class="form-control border border-primary " id="exampleInputUsername1"
                               placeholder="Date of Birth" name="DOB"
                               value="<?php echo isset($row['DOB']) ? $row['DOB'] : '' ?>">
                           </div>
@@ -243,10 +243,11 @@ include ('./include/header.php');
                         <div class="form-group row">
 
                           <div class="col-sm-12">
-                            <label for="exampleInputUsername1">Photo</label>
+                            <label for="exampleInputUsername1">Photo</label><br>
+                            <img src="./image/<?php echo isset($row['Photo']) ? $row['Photo'] : '' ?>" class="pb-3" width="150px">
                             <input type="file" class="form-control border border-primary " id="exampleInputUsername1"
                               placeholder="Photo"name="Photo"
-                              value="./image/<?php echo isset($row['Photo']) ? $row['Photo'] : '' ?>">
+                              value="">
                           </div>
                         </div>
                       </div>
@@ -283,7 +284,7 @@ include ('./include/header.php');
 
                           <div class="col-sm-12">
                             <label for="exampleInputUsername1">Register Date</label>
-                            <input type="text" class="form-control border border-primary " id="exampleInputUsername1"
+                            <input type="date" class="form-control border border-primary " id="exampleInputUsername1"
                               placeholder="Rigister Date"name="RegisterDate"
                               value="<?php echo isset($row['RegisterDate']) ? $row['RegisterDate'] : '' ?>">
                           </div>

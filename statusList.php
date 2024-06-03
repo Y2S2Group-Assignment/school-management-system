@@ -40,10 +40,10 @@
                     <div class="col-lg-12 grid-margin stretch-card">
                         <div class="card">
                             <div class="card-body">
-                                <h4 class="card-title">Student Program List</h4>
+                                <h4 class="card-title">Student Status List</h4>
                                 <div class="pt-3 pb-3">
                                     <a href="c_status.php">
-                                        <button type="button" class="btn btn-primary w-15 float-right">Add New Program</button>
+                                        <button type="button" class="btn btn-primary w-15 float-right">Add New Status</button>
                                     </a>
                                 </div>
 
@@ -90,7 +90,7 @@
                                                 ?>
                                                 <tr>
                                                     <td class="py-1">
-                                                        <?= $i++ ?>.
+                                                        <b><?= $i++ ?>.</b>
                                                         
                                                     </td>
                                                    
