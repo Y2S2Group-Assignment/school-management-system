@@ -1,5 +1,11 @@
 <!DOCTYPE html>
 <html lang="en">
+<?php 
+  session_start();
+  if(!isset($_SESSION['user_id']))
+  header('location: ./login.php');
+include './connection/conn.php';
+?>
 
   <?php 
       include('./include/header.php');
@@ -20,8 +26,214 @@
       <!-- partial -->
       <div class="main-panel">
         <div class="content-wrapper">
+
+       
+
           <div class="row">
-            <div class="col-12 col-xl-6 grid-margin stretch-card">
+          <div class="col-12 col-xl-4">
+                  <div class="card bg-primary text-white mb-3">
+                    <div class="card-body">
+                      <div class="d-flex justify-content-between align-items-center">
+                      <div class="mr-3">
+                          <div class="text-white-100 "><h5>Beltei International University</h5></div>
+                          <div class="text-white-75  pt-3">Student</div>
+                          <div class="text-lg font-weight-bold pt-4 ">
+                            <h5>
+                            <?php 
+                                $student = $conn->query("SELECT * FROM tblstudentinfo");
+                                echo $student->num_rows > 0 ? $student->num_rows : "0";
+                              ?>
+                            </h5>
+
+                            
+                          </div>
+                        </div>
+                        <i class="fa fa-calendar "></i>
+                      </div>
+                    </div>
+                    <div class="card-footer d-flex align-items-center justify-content-between">
+                      <a class="small text-white stretched-link" href="informationList.php">View Student Information</a>
+                      <div class="small text-white">
+                        <i class="fas fa-angle-right"></i>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-12 col-xl-4">
+                  <div class="card bg-success text-white mb-3">
+                    <div class="card-body">
+                      <div class="d-flex justify-content-between align-items-center">
+                        <div class="mr-3">
+                          <div class="text-white-100 "><h5>Beltei International University</h5></div>
+                          <div class="text-white-75  pt-3">Program</div>
+                          <div class="text-lg font-weight-bold pt-4 ">
+                            <h5>
+                            <?php 
+                                $student = $conn->query("SELECT * FROM tblprogram");
+                                echo $student->num_rows > 0 ? $student->num_rows : "0";
+                              ?>
+                            </h5>
+
+                            
+                          </div>
+                        </div>
+                        <i class="fa fa-calendar "></i>
+                      </div>
+                    </div>
+                    <div class="card-footer d-flex align-items-center justify-content-between">
+                      <a class="small text-white stretched-link" href="stuproList.php">View Program</a>
+                      <div class="small text-white">
+                        <i class="fas fa-angle-right"></i>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-12 col-xl-4">
+                  <div class="card bg-warning text-white mb-3">
+                    <div class="card-body">
+                      <div class="d-flex justify-content-between align-items-center">
+                      <div class="mr-3">
+                          <div class="text-white-100 "><h5>Beltei International University</h5></div>
+                          <div class="text-white-75  pt-3">Student Schedule</div>
+                          <div class="text-lg font-weight-bold pt-4 ">
+                            <h5>
+                            <?php 
+                                $student = $conn->query("SELECT * FROM tblschedule");
+                                echo $student->num_rows > 0 ? $student->num_rows : "0";
+                              ?>
+                            </h5>
+
+                            
+                          </div>
+                        </div>
+                        <i class="fa fa-calendar "></i>
+                      </div>
+                    </div>
+                    <div class="card-footer d-flex align-items-center justify-content-between">
+                      <a class="small text-white stretched-link" href="stuSchedule.php">View Schedule</a>
+                      <div class="small text-white">
+                        <i class="fas fa-angle-right"></i>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-12 col-xl-4">
+                  <div class="card bg-info text-white mb-3">
+                    <div class="card-body">
+                      <div class="d-flex justify-content-between align-items-center">
+                      <div class="mr-3">
+                          <div class="text-white-100 "><h5>Beltei International University</h5></div>
+                          <div class="text-white-75  pt-3">Student Fail Subject</div>
+                          <div class="text-lg font-weight-bold pt-4 ">
+                            <h5>
+                            <?php 
+                                $student = $conn->query("SELECT * FROM tblsubjectfall WHERE Assigned = 1 ");
+                                echo $student->num_rows > 0 ? $student->num_rows : "0";
+                              ?>
+                            </h5>
+
+                            
+                          </div>
+                        </div>
+                        <i class="fa fa-calendar "></i>
+                      </div>
+                    </div>
+                    <div class="card-footer d-flex align-items-center justify-content-between">
+                      <a class="small text-white stretched-link" href="c_subfail.php">View Student Subject Fail</a>
+                      <div class="small text-white">
+                        <i class="fas fa-angle-right"></i>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <!-- <div class="col-12 col-xl-4">
+                  <div class="card bg-secondary text-white mb-3">
+                    <div class="card-body">
+                      <div class="d-flex justify-content-between align-items-center">
+                      <div class="mr-3">
+                          <div class="text-white-100 "><h5>Beltei International University</h5></div>
+                          <div class="text-white-75  pt-3">Student Fail Subject</div>
+                          <div class="text-lg font-weight-bold pt-4 ">
+                            <h5>
+                            <?php 
+                                $student = $conn->query("SELECT * FROM tblsubjectfall");
+                                echo $student->num_rows > 0 ? $student->num_rows : "0";
+                              ?>
+                            </h5>
+
+                            
+                          </div>
+                        </div>
+                        <i class="fa fa-calendar "></i>
+                      </div>
+                    </div>
+                    <div class="card-footer d-flex align-items-center justify-content-between">
+                      <a class="small text-white stretched-link" href="c_subfail.php">View Student Subject Fail</a>
+                      <div class="small text-white">
+                        <i class="fas fa-angle-right"></i>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-12 col-xl-4">
+                  <div class="card bg-danger text-white mb-3">
+                    <div class="card-body">
+                      <div class="d-flex justify-content-between align-items-center">
+                      <div class="mr-3">
+                          <div class="text-white-100 "><h5>Beltei International University</h5></div>
+                          <div class="text-white-75  pt-3">Student Fail Subject</div>
+                          <div class="text-lg font-weight-bold pt-4 ">
+                            <h5>
+                            <?php 
+                                $student = $conn->query("SELECT * FROM tblsubjectfall");
+                                echo $student->num_rows > 0 ? $student->num_rows : "0";
+                              ?>
+                            </h5>
+
+                            
+                          </div>
+                        </div>
+                        <i class="fa fa-calendar "></i>
+                      </div>
+                    </div>
+                    <div class="card-footer d-flex align-items-center justify-content-between">
+                      <a class="small text-white stretched-link" href="c_subfail.php">View Student Subject Fail</a>
+                      <div class="small text-white">
+                        <i class="fas fa-angle-right"></i>
+                      </div>
+                    </div>
+                  </div>
+                </div> -->
+                <!-- <div class="col-12 col-xl-4">
+                  <div class="card bg-warning text-white mb-3">
+                    <div class="card-body">
+                      <div class="d-flex justify-content-between align-items-center">
+                      <div class="mr-3">
+                          <div class="text-white-100 ">Beltei International University</div>
+                          <div class="text-white-75  pt-3">Student Schedule</div>
+                          <div class="text-lg font-weight-bold pt-4 ">
+                            <h5>
+                            <?php 
+                                $student = $conn->query("SELECT * FROM tblstudentinfo");
+                                echo $student->num_rows > 0 ? $student->num_rows : "0";
+                              ?>
+                            </h5>
+
+                            
+                          </div>
+                        </div>
+                        <i class="fa fa-calendar "></i>
+                      </div>
+                    </div>
+                    <div class="card-footer d-flex align-items-center justify-content-between">
+                      <a class="small text-white stretched-link" href="product_type.php">View Product Type</a>
+                      <div class="small text-white">
+                        <i class="fas fa-angle-right"></i>
+                      </div>
+                    </div>
+                  </div>
+                </div> -->
+            <!-- <div class="col-12 col-xl-6 grid-margin stretch-card">
               <div class="row w-100 flex-grow">
                 <div class="col-md-12 grid-margin stretch-card">
                   <div class="card">
@@ -178,8 +390,10 @@
                 </div>
               </div>
             </div>
+          </div> -->
+
           </div>
-          <div class="row">
+          <!-- <div class="row">
             <div class="col-lg-12 grid-margin stretch-card">
               <div class="card">
                 <div class="card-body">
@@ -345,9 +559,9 @@
                 </div>
               </div>
             </div>
-          </div>
+          </div> -->
           <!-- row end -->
-          <div class="row">
+          <!-- <div class="row">
             <div class="col-md-4 grid-margin stretch-card">
               <div class="card bg-facebook d-flex align-items-center">
                 <div class="card-body py-5">
@@ -390,12 +604,12 @@
                 </div>
               </div>
             </div>
-          </div>
+          </div> -->
           <!-- row end -->
         </div>
         <!-- content-wrapper ends -->
         <!-- partial:./partials/_footer.html -->
-        <footer class="footer">
+        <!-- <footer class="footer">
           <div class="card">
             <div class="card-body">
               <div class="d-sm-flex justify-content-center justify-content-sm-between">
@@ -405,7 +619,7 @@
               </div>
             </div>
           </div>
-        </footer>
+        </footer> -->
         <!-- partial -->
       </div>
       <!-- main-panel ends -->

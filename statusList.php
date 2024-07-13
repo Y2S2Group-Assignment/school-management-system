@@ -29,7 +29,7 @@
             
               
 
-                $sql = " SELECT * FROM tblstudentstatus ";
+                $sql = " SELECT * FROM tblstudentstatus WHERE Assigned = 1 AND Status = 1 ";
                 $result = mysqli_query($conn, $sql);
                 $i = 1;
 
@@ -42,7 +42,7 @@
                             <div class="card-body">
                                 <h4 class="card-title">Student Status List</h4>
                                 <div class="pt-3 pb-3">
-                                    <a href="c_status.php">
+                                    <a href="c_newstatus.php">
                                         <button type="button" class="btn btn-primary w-15 float-right">Add New Status</button>
                                     </a>
                                 </div>
@@ -66,9 +66,9 @@
                                                 <th>
                                                     Program
                                                 </th>
-                                                <th>
+                                                <!-- <th>
                                                     Assigned
-                                                </th>
+                                                </th> -->
                                                 <th>
                                                     Note
                                                 </th>
@@ -100,7 +100,7 @@
                                                         $resultMenu=mysqli_query($conn,$select_menu);
                                                         while( $row_data=mysqli_fetch_assoc($resultMenu)){
                                                     ?> 
-                                                        <td class="text-center ">
+                                                        <td>
                                                             <b>
                                                                 <?php echo $row_data['NameInLatin'] ?>
                                                             </b>
@@ -113,27 +113,27 @@
                                                         $resultMenu=mysqli_query($conn,$select_menu);
                                                         while( $row_data=mysqli_fetch_assoc($resultMenu)){
                                                     ?> 
-                                                        <td class="text-center ">
+                                                        <td>
                                                             <b>
                                                                 <?php echo $row_data['ProgramID'] ?>
                                                             </b>
                                                         </td>
                                                     <?php } ?>
                                                    
-                                                        <td class="text-center ">
+                                                        <!-- <td class="text-center ">
                                                             <b>
                                                                 <?php echo $row['Assigned'] ?>
                                                             </b>
-                                                        </td>
+                                                        </td> -->
                                                     
                                                    
-                                                        <td class="text-center ">
+                                                        <td>
                                                             <b>
                                                                 <?php echo $row['Note'] ?>
                                                             </b>
                                                         </td>
                                                    
-                                                        <td class="text-center ">
+                                                        <td>
                                                             <b>
                                                                 <?php echo $row['AssignDate'] ?>
                                                             </b>
@@ -141,7 +141,7 @@
                                                     
                                                    
                                                     <td>
-                                                        <a href="c_status.php?edit_status=<?php echo $row['StudentStatusID'] ?> ">
+                                                        <a href="e_status.php?edit_status=<?php echo $row['StudentStatusID'] ?> ">
                                                             <button class="btn btn-outline-primary btn-sm edit_borrower"
                                                                 type="button"><i class="fa fa-edit">
                                                                 </i></button>

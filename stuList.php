@@ -120,13 +120,13 @@
                                                                     <button type="button" class="btn btn-outline-secondary dropdown-toggle" data-toggle="dropdown">Dropdown</button>
                                                                     <div class="dropdown-menu">
                                                                     <a class="dropdown-item" href="c_information.php?edit_student=<?php echo $row['StudentID'] ?> ">
-                                                                    1. Edit Information
+                                                                    1. Detail 
                                                                 </a>
                                                                     <a class="dropdown-item" href="c_edu.php?edit_edu=<?php echo $row['StudentID'] ?> ">
-                                                                        2. Edit Educational
+                                                                        2. Edit
                                                                     </a>
                                                                     <a class="dropdown-item" href="c_family.php?edit_family=<?php echo $row['StudentID'] ?> ">
-                                                                        3. Edit FamilyBackground
+                                                                        3. Delete
                                                                     </a>
                                                                     <a class="dropdown-item" href="c_subjectfail.php?edit_subjectfail=<?php echo $row['StudentID'] ?> ">
                                                                         4. Edit Student Subject
@@ -138,9 +138,9 @@
                                                                   
                                                                     </div>                          
                                                                 </div>
-                                                                <a href="stuDetail.php?stuDetail=<?php echo $row['StudentID'] ?> ">
+                                                                <!-- <a href="stuDetail.php?stuDetail=<?php echo $row['StudentID'] ?> ">
                                                                     <button type="button" class="btn btn-primary">Detail</button>
-                                                                </a>
+                                                                </a> -->
                                                                
                                                         
                                                         <!-- <a href="" data-toggle="modal" data-target="#alert">

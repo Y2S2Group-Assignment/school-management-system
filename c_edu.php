@@ -147,7 +147,7 @@ include ('./include/header.php');
 
                     </div>
 
-                    <a href="stuList.php"><button type="button" class="btn btn-danger">
+                    <a href="educationList.php"><button type="button" class="btn btn-danger">
                         Cancel
                       </button>
                     </a>

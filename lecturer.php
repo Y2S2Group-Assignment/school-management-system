@@ -93,7 +93,7 @@
                                                         $resultMenu=mysqli_query($conn,$select_menu);
                                                         while( $row_data=mysqli_fetch_assoc($resultMenu)){
                                                     ?> 
-                                                        <td class="text-center ">
+                                                        <td>
                                                             <b>
                                                                 <?php echo $row_data['SexEN'] ?>
                                                             </b>

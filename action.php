@@ -22,7 +22,7 @@
             // Update operation
             $sql = "UPDATE tblschedule SET SubjectID ='$SubjectID', LecturerID ='$LecturerID', DayWeekID ='$DayWeekID',
             TimeID ='$TimeID', RoomID ='$RoomID', ProgramID ='$ProgramID',
-            DateStart ='$DateStart', DateEnd ='$DateEnd', ScheduleDate ='$ScheduleDate',  
+            DateStart ='$DateStart', DateEnd ='$DateEnd', ScheduleDate ='$ScheduleDate'  
             WHERE ScheduleID = $id ";
             
         } 
@@ -36,7 +36,7 @@
         if(mysqli_query($conn, $sql))
         {
             $_SESSION['status'] = "Proccessing Successfully.";
-            header("Location: schedule.php");
+            header("Location: stuSchedule.php");
             exit();
         }
         else
@@ -72,7 +72,7 @@
         if(mysqli_query($conn, $sql))
         {
             $_SESSION['status'] = "Proccessing Successfully.";
-            header("Location: subjectfail.php");
+            header("Location: stuList.php");
             exit();
         }
         else
@@ -262,19 +262,55 @@
 
     }
     
-    if(isset($_GET['d_schedule']))
-    {
-        $delete = $_GET['d_schedule'];
+    // if(isset($_GET['d_schedule']))
+    // {
+    //     $delete = $_GET['d_schedule'];
 
-        $sql = "DELETE FROM tblschedule WHERE ScheduleID = $delete";
+    //     $sql = "DELETE FROM tblschedule WHERE ScheduleID = $delete";
         
-        if (mysqli_query($conn, $sql)) {
-            $_SESSION['status'] = "Proccessing Successfully.";
-            header("Location: schedule.php");
+    //     if (mysqli_query($conn, $sql)) {
+    //         $_SESSION['status'] = "Proccessing Successfully.";
+    //         header("Location: stuSchedule.php");
+    //         exit();
+    //     } else {
+    //         echo "Error: " . $sql . ":-" . mysqli_error($conn);
+    //     }
+    //     mysqli_close($conn);
+    // }
+
+    if(isset($_GET['d_schedule'])) {
+        $delete = intval($_GET['d_schedule']); // Ensure $delete is an integer to prevent SQL injection
+    
+        // Begin transaction
+        mysqli_begin_transaction($conn);
+    
+        try {
+            // Prepare and execute deletion of dependent rows
+            $stmt1 = $conn->prepare("DELETE FROM tblsubjectfall WHERE ScheduleID = ?");
+            $stmt1->bind_param("i", $delete);
+            if (!$stmt1->execute()) {
+                throw new Exception("Error deleting from tblsubjectfall: " . $stmt1->error);
+            }
+    
+            // Prepare and execute deletion of the schedule row
+            $stmt2 = $conn->prepare("DELETE FROM tblschedule WHERE ScheduleID = ?");
+            $stmt2->bind_param("i", $delete);
+            if (!$stmt2->execute()) {
+                throw new Exception("Error deleting from tblschedule: " . $stmt2->error);
+            }
+    
+            // Commit transaction
+            mysqli_commit($conn);
+            $_SESSION['status'] = "Processing Successfully.";
+            header("Location: stuSchedule.php");
             exit();
-        } else {
-            echo "Error: " . $sql . ":-" . mysqli_error($conn);
+        } catch (Exception $e) {
+            // Rollback transaction on error
+            mysqli_rollback($conn);
+            echo "Error: " . $e->getMessage();
         }
+    
+        // Close the database connection
         mysqli_close($conn);
     }
     if(isset($_GET['d_subjectfail']))
@@ -285,7 +321,7 @@
         
         if (mysqli_query($conn, $sql)) {
             $_SESSION['status'] = "Proccessing Successfully.";
-            header("Location: c_subjectfail.php");
+            header("Location: subfailList.php");
             exit();
         } else {
             echo "Error: " . $sql . ":-" . mysqli_error($conn);
@@ -373,6 +409,38 @@
         mysqli_close($conn);
     }
 
+    if(isset($_GET['d_stuedu']))
+    {
+        $delete = $_GET['d_stuedu'];
+
+        $sql = "DELETE FROM tbleducationalbackground WHERE StudentID = $delete";
+        
+        if (mysqli_query($conn, $sql)) {
+            $_SESSION['status'] = "Proccessing Successfully.";
+            header("Location: educationList.php");
+            exit();
+        } else {
+            echo "Error: " . $sql . ":-" . mysqli_error($conn);
+        }
+        mysqli_close($conn);
+    }
+
+    if(isset($_GET['d_stufamily']))
+    {
+        $delete = $_GET['d_stufamily'];
+
+        $sql = "DELETE FROM tblfamilybackground WHERE StudentID = $delete";
+        
+        if (mysqli_query($conn, $sql)) {
+            $_SESSION['status'] = "Proccessing Successfully.";
+            header("Location: familyList.php");
+            exit();
+        } else {
+            echo "Error: " . $sql . ":-" . mysqli_error($conn);
+        }
+        mysqli_close($conn);
+    }
+
     if(isset($_GET['d_program']))
     {
         $delete = $_GET['d_program'];
@@ -405,9 +473,143 @@
         mysqli_close($conn);
     }
 
-    if(isset($_POST['c_information']))
-    {
+    // if(isset($_POST['c_information']))
+    // {
+    //     $id = $_POST['StudentID'];
+    //     $ProgramID = $_POST['ProgramID'];
+    //     $NameInKhmer = $_POST['NameInKhmer'];
+    //     $NameInLatin = $_POST['NameInLatin'];
+    //     $FamilyName = $_POST['FamilyName'];
+    //     $GivenName = $_POST['GivenName'];
+    //     $SexID = $_POST['SexID'];
+    //     $IDPassportNo = $_POST['IDPassportNo'];
+    //     $NationalityID = $_POST['NationalityID'];
+    //     $CountryID = $_POST['CountryID'];
+    //     $DOB = $_POST['DOB'];
+    //     $POB = $_POST['POB'];
+    //     $PhoneNumber = $_POST['PhoneNumber'];
+    //     $Email = $_POST['Email'];
+    //     $CurrentAddress = $_POST['CurrentAddress'];
+    //     $CurrentAddressPP = $_POST['CurrentAddressPP'];
+    //     // $Photo = $_POST['Photo'];
+    //     $RegisterDate = $_POST['RegisterDate'];
+
+    //     if(move_uploaded_file($_FILES["Photo"]["tmp_name"],"./image/".$_FILES["Photo"]["name"]))
+    //       {
+    //          $Photo = $_FILES["Photo"]["name"];
+    //       }
+
+
+    //     if (!empty($id)) {
+    //         // Update operation
+    //         $sql = "UPDATE tblstudentinfo SET NameInKhmer ='$NameInKhmer', NameInLatin ='$NameInLatin', FamilyName ='$FamilyName', 
+    //         GivenName ='$GivenName', SexID ='$SexID', IDPassportNo ='$IDPassportNo',
+    //         NationalityID ='$NationalityID', CountryID ='$CountryID', DOB ='$DOB',
+    //         POB ='$POB',PhoneNumber ='$PhoneNumber', Email='$Email',
+    //         CurrentAddress ='$CurrentAddress', CurrentAddressPP ='$CurrentAddressPP', Photo ='$Photo',
+    //         RegisterDate ='$RegisterDate'
+    //         WHERE StudentID = $id ";
+            
+    //     } 
+    //     else {
+    //         // Insert operation
+    //         $sql = "INSERT INTO tblstudentinfo (ProgramID,NameInKhmer, NameInLatin,FamilyName,GivenName,SexID,IDPassportNo,NationalityID,
+    //         CountryID ,DOB,POB,PhoneNumber, Email,CurrentAddress,CurrentAddressPP, Photo,RegisterDate ) 
+    //         VALUES ('$ProgramID','$NameInKhmer', '$NameInLatin', '$FamilyName', '$GivenName', '$SexID', '$IDPassportNo',
+    //         '$NationalityID', '$CountryID', '$DOB', '$POB', '$PhoneNumber', '$Email', '$CurrentAddress',
+    //         '$CurrentAddressPP', '$Photo', '$RegisterDate')";
+
+    //         if($sql){
+    //             $sql1 = "INSERT INTO tblstudentstatus (StudentID, ProgramID)
+    //             VALUES ('$StudentID' , '$ProgramID')" ;
+
+    //             if(mysqli_query($conn, $sql1))
+    //             {
+    //                 $_SESSION['status'] = "Proccessing Successfully.";
+    //                 header("Location: stuList.php");
+    //                 exit();
+    //             }
+    //             else
+    //             {
+    //                 echo "alert('Error: ') " . $sql1 . ":-" . mysqli_error($conn);
+    //             }
+    //         }
+        
+    //     }
+
+       
+    //     mysqli_close($conn);
+
+    // }
+
+    // if (isset($_POST['c_information'])) {
+    //     $id = $_POST['StudentID'];
+    //     $ProgramID = $_POST['ProgramID'];
+    //     $NameInKhmer = $_POST['NameInKhmer'];
+    //     $NameInLatin = $_POST['NameInLatin'];
+    //     $FamilyName = $_POST['FamilyName'];
+    //     $GivenName = $_POST['GivenName'];
+    //     $SexID = $_POST['SexID'];
+    //     $IDPassportNo = $_POST['IDPassportNo'];
+    //     $NationalityID = $_POST['NationalityID'];
+    //     $CountryID = $_POST['CountryID'];
+    //     $DOB = $_POST['DOB'];
+    //     $POB = $_POST['POB'];
+    //     $PhoneNumber = $_POST['PhoneNumber'];
+    //     $Email = $_POST['Email'];
+    //     $CurrentAddress = $_POST['CurrentAddress'];
+    //     $CurrentAddressPP = $_POST['CurrentAddressPP'];
+    //     $RegisterDate = $_POST['RegisterDate'];
+    //     $Photo = null;
+    
+    //     // Handle file upload
+    //     if (move_uploaded_file($_FILES["Photo"]["tmp_name"], "./image/" . $_FILES["Photo"]["name"])) {
+    //         $Photo = $_FILES["Photo"]["name"];
+    //     }
+    
+    //     if (!empty($id)) {
+    //         // Update operation
+    //         $stmt = $conn->prepare("UPDATE tblstudentinfo SET NameInKhmer = ?, NameInLatin = ?, FamilyName = ?, GivenName = ?, SexID = ?, IDPassportNo = ?, NationalityID = ?, CountryID = ?, DOB = ?, POB = ?, PhoneNumber = ?, Email = ?, CurrentAddress = ?, CurrentAddressPP = ?, Photo = ?, RegisterDate = ? WHERE StudentID = ?");
+    //         $stmt->bind_param('sssssisissssssssi', $NameInKhmer, $NameInLatin, $FamilyName, $GivenName, $SexID, $IDPassportNo, $NationalityID, $CountryID, $DOB, $POB, $PhoneNumber, $Email, $CurrentAddress, $CurrentAddressPP, $Photo, $RegisterDate, $id);
+    //     } else {
+    //         // Insert operation for tblstudentinfo
+    //         $stmt = $conn->prepare("INSERT INTO tblstudentinfo (ProgramID, NameInKhmer, NameInLatin, FamilyName, GivenName, SexID, IDPassportNo, NationalityID, CountryID, DOB, POB, PhoneNumber, Email, CurrentAddress, CurrentAddressPP, Photo, RegisterDate) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+    //         $stmt->bind_param('isssssissssssssss', $ProgramID, $NameInKhmer, $NameInLatin, $FamilyName, $GivenName, $SexID, $IDPassportNo, $NationalityID, $CountryID, $DOB, $POB, $PhoneNumber, $Email, $CurrentAddress, $CurrentAddressPP, $Photo, $RegisterDate);
+    //     }
+    
+    //     if ($stmt->execute()) {
+    //         if (empty($id)) {
+    //             // Get the last inserted StudentID
+    //             $StudentID = $conn->insert_id;
+    
+    //             // Insert into tblstudentstatus
+    //             $stmt2 = $conn->prepare("INSERT INTO tblstudentstatus (StudentID, ProgramID) VALUES (?, ?)");
+    //             $stmt2->bind_param('ii', $StudentID, $ProgramID);
+    
+    //             if ($stmt2->execute()) {
+    //                 $_SESSION['status'] = "Processing Successfully.";
+    //                 header("Location: stuList.php");
+    //                 exit();
+    //             } else {
+    //                 echo "Error inserting into tblstudentstatus: " . $stmt2->error;
+    //             }
+    //             $stmt2->close();
+    //         } else {
+    //             $_SESSION['status'] = "Processing Successfully.";
+    //             header("Location: stuList.php");
+    //             exit();
+    //         }
+    //     } else {
+    //         echo "Error: " . $stmt->error;
+    //     }
+    //     $stmt->close();
+    //     mysqli_close($conn);
+    // }
+
+
+    if(isset($_POST['c_information'])) {
         $id = $_POST['StudentID'];
+        $ProgramID = $_POST['ProgramID'];
         $NameInKhmer = $_POST['NameInKhmer'];
         $NameInLatin = $_POST['NameInLatin'];
         $FamilyName = $_POST['FamilyName'];
@@ -422,49 +624,72 @@
         $Email = $_POST['Email'];
         $CurrentAddress = $_POST['CurrentAddress'];
         $CurrentAddressPP = $_POST['CurrentAddressPP'];
-        // $Photo = $_POST['Photo'];
         $RegisterDate = $_POST['RegisterDate'];
-
-        if(move_uploaded_file($_FILES["Photo"]["tmp_name"],"./image/".$_FILES["Photo"]["name"]))
-          {
-             $Photo = $_FILES["Photo"]["name"];
-          }
-
-
+        $Assiged = 1;
+        $Photo = $_POST['Photo'];
+    
+        // Handle file upload
+        if(move_uploaded_file($_FILES["Photo"]["tmp_name"],"./image/".$_FILES["Photo"]["name"])) {
+            $Photo = $_FILES["Photo"]["name"];
+        }
+    
         if (!empty($id)) {
             // Update operation
-            $sql = "UPDATE tblstudentinfo SET NameInKhmer ='$NameInKhmer', NameInLatin ='$NameInLatin', FamilyName ='$FamilyName', 
-            GivenName ='$GivenName', SexID ='$SexID', IDPassportNo ='$IDPassportNo',
-            NationalityID ='$NationalityID', CountryID ='$CountryID', DOB ='$DOB',
-            POB ='$POB',PhoneNumber ='$PhoneNumber', Email='$Email',
-            CurrentAddress ='$CurrentAddress', CurrentAddressPP ='$CurrentAddressPP', Photo ='$Photo',
-            RegisterDate ='$RegisterDate'
-            WHERE StudentID = $id ";
-            
-        } 
-        else {
-            // Insert operation
-            $sql = "INSERT INTO tblstudentinfo (NameInKhmer, NameInLatin,FamilyName,GivenName,SexID,IDPassportNo,NationalityID,
-            CountryID ,DOB,POB,PhoneNumber, Email,CurrentAddress,CurrentAddressPP, Photo,RegisterDate ) 
-            VALUES ('$NameInKhmer', '$NameInLatin', '$FamilyName', '$GivenName', '$SexID', '$IDPassportNo',
-            '$NationalityID', '$CountryID', '$DOB', '$POB', '$PhoneNumber', '$Email', '$CurrentAddress',
-            '$CurrentAddressPP', '$Photo', '$RegisterDate')";
+            $sql = "UPDATE tblstudentinfo SET 
+                        ProgramID = '$ProgramID',
+                        NameInKhmer = '$NameInKhmer', 
+                        NameInLatin = '$NameInLatin', 
+                        FamilyName = '$FamilyName', 
+                        GivenName = '$GivenName', 
+                        SexID = '$SexID', 
+                        IDPassportNo = '$IDPassportNo',
+                        NationalityID = '$NationalityID', 
+                        CountryID = '$CountryID', 
+                        DOB = '$DOB',
+                        POB = '$POB',
+                        PhoneNumber = '$PhoneNumber', 
+                        Email = '$Email',
+                        CurrentAddress = '$CurrentAddress', 
+                        CurrentAddressPP = '$CurrentAddressPP', 
+                        Photo = '$Photo',
+                        RegisterDate = '$RegisterDate'
+                    WHERE StudentID = $id";
+        } else {
+            // Insert operation for tblstudentinfo
+            $sql = "INSERT INTO tblstudentinfo (ProgramID, NameInKhmer, NameInLatin, FamilyName, GivenName, SexID, IDPassportNo, NationalityID,
+                CountryID, DOB, POB, PhoneNumber, Email, CurrentAddress, CurrentAddressPP, Photo, RegisterDate) 
+                VALUES ('$ProgramID', '$NameInKhmer', '$NameInLatin', '$FamilyName', '$GivenName', '$SexID', '$IDPassportNo',
+                '$NationalityID', '$CountryID', '$DOB', '$POB', '$PhoneNumber', '$Email', '$CurrentAddress',
+                '$CurrentAddressPP', '$Photo', '$RegisterDate')";
+
+                if (mysqli_query($conn, $sql)) {
+                    // Get the last inserted StudentID
+                    $StudentID = mysqli_insert_id($conn);
+
+                    // Insert into tblstudentstatus
+                    $sql1 = "INSERT INTO tblstudentstatus (StudentID,ProgramID,Assigned,Note,AssignDate,Status)
+                            VALUES ('$StudentID', '$ProgramID' , '1','Agree',NOW()  , '1')";
+
+                
+                } else {
+                    echo "alert('Error: ') " . $sql . ":-" . mysqli_error($conn);
+                }
+    
+        }
         
-        }
-
-        if(mysqli_query($conn, $sql))
-        {
-            $_SESSION['status'] = "Proccessing Successfully.";
-            header("Location: stuList.php");
+       
+        if (mysqli_query($conn, $sql1)) {
+            $_SESSION['status'] = "Processing Successfully.";
+            header("Location: informationList.php");
             exit();
+        } else {
+            echo "alert('Error: ') " . $sql1 . ":-" . mysqli_error($conn);
         }
-        else
-        {
-            echo "alert('Error: ') " . $sql . ":-" . mysqli_error($conn);
-        }
+    
         mysqli_close($conn);
-
     }
+    
+    
 
 
     if(isset($_POST['c_edu']))
@@ -494,7 +719,7 @@
         if(mysqli_query($conn, $sql))
         {
             $_SESSION['status'] = "Proccessing Successfully.";
-            header("Location: stuList.php");
+            header("Location: educationList.php");
             exit();
         }
         else
@@ -551,7 +776,7 @@
         if(mysqli_query($conn, $sql))
         {
             $_SESSION['status'] = "Proccessing Successfully.";
-            header("Location: stuList.php");
+            header("Location: familyList.php");
             exit();
         }
         else
@@ -643,6 +868,56 @@
         }
         mysqli_close($conn);
 
+    }
+
+
+
+    if(isset($_POST['register'])){
+
+        $id = $_POST['id'];
+        $fullname = $_POST['fullname'];
+        $username = $_POST['username'];
+        $email = $_POST['email'];
+        $password = $_POST['password'];
+        $phone = $_POST['phone'];
+
+        if (!empty($id)) {
+            $sql = "UPDATE `tbl_user` SET fullname = '$fullname',username = '$username',email = '$email',password = '$password', phone = '$phone'
+            WHERE id = $id ";
+   
+        }else{
+            $sql = "INSERT INTO tbl_user (fullname,username,email,password,phone) VALUES ('$fullname','$username','$email','$password','$phone')";
+
+        }
+
+        
+        if (mysqli_query($conn, $sql)) {
+            $_SESSION['status'] = "Proccessing Successfully.";
+            header("Location: user.php");
+            exit();
+        } else {
+            echo "alert('Error: ') " . $sql . ":-" . mysqli_error($conn);
+        }
+        mysqli_close($conn);    
+    }
+
+    
+
+    if(isset($_GET['d_user'])){
+        $delete = $_GET['d_user'];
+
+        $sql = " DELETE FROM tbl_user WHERE id = $delete ";
+
+        if (mysqli_query($conn, $sql)) {
+        
+            $_SESSION['status'] = "User has been removed successfully.";
+            header("Location: user.php");
+            exit();
+        } else {
+            echo "Error: " . $sql . ":-" . mysqli_error($conn);
+        }
+        mysqli_close($conn);
+        
     }
 ?>
 

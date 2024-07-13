@@ -2,6 +2,7 @@
 <html lang="en">
 
 <?php
+require('function.php');
 include ('./include/header.php');
 ?>
 
@@ -36,8 +37,6 @@ include ('./include/header.php');
                         //   $AcademicYearID = $row['AcademicYearID'];
                         //   $Photo = $row['Photo'];
             
-                    } else {
-                        echo "No student found with the provided ID.";
                     }
                 } else {
                     echo "Error executing query: " . mysqli_error($conn);
@@ -123,7 +122,7 @@ include ('./include/header.php');
 
                                 <?php
                                 //  include_once 'Connection.php';
-                                $select_menu = "SELECT * FROM tblstudentstatus WHERE StudentID = $stu";
+                                $select_menu = "SELECT * FROM tblstudentstatus WHERE StudentID = $stu AND Status = 1";
                                 $resultMenu = mysqli_query($conn, $select_menu);
                                 while ($row_data = mysqli_fetch_assoc($resultMenu)) {
                                     $ProgramID = $row_data['ProgramID'];
@@ -144,71 +143,74 @@ include ('./include/header.php');
                                         ?>
 
                                         <br><label for="exampleInputUsername1">Student Program: </label>
+                                        
                                         <?php
-                                        if (isset($YearID)) {
-                                            $subselect_menu1 = "SELECT * FROM tblyear WHERE YearID = $YearID";
-                                            $subresultMenu1 = mysqli_query($conn, $subselect_menu1);
-
-                                            while ($row_subdata1 = mysqli_fetch_assoc($subresultMenu1)) {
-                                                echo "<b>" . $row_subdata1['YearEN'] . '/' . "</b>";
+                                        
+                                            if (isset($YearID)) {
+                                                $subselect_menu1 = "SELECT * FROM tblyear WHERE YearID = $YearID";
+                                                $subresultMenu1 = mysqli_query($conn, $subselect_menu1);
+    
+                                                while ($row_subdata1 = mysqli_fetch_assoc($subresultMenu1)) {
+                                                    echo "<b>" . $row_subdata1['YearEN'] . '/' . "</b>";
+                                                }
                                             }
-                                        }
-                                        if (isset($SemesterID)) {
-                                            $subselect_menu1 = "SELECT * FROM tblsemester WHERE SemesterID = $SemesterID";
-                                            $subresultMenu1 = mysqli_query($conn, $subselect_menu1);
-
-                                            while ($row_subdata1 = mysqli_fetch_assoc($subresultMenu1)) {
-                                                echo "<b>" . $row_subdata1['SemesterEN'] . '/' . "</b>";
+                                            if (isset($SemesterID)) {
+                                                $subselect_menu1 = "SELECT * FROM tblsemester WHERE SemesterID = $SemesterID";
+                                                $subresultMenu1 = mysqli_query($conn, $subselect_menu1);
+    
+                                                while ($row_subdata1 = mysqli_fetch_assoc($subresultMenu1)) {
+                                                    echo "<b>" . $row_subdata1['SemesterEN'] . '/' . "</b>";
+                                                }
                                             }
-                                        }
-                                        if (isset($ShiftID)) {
-                                            $subselect_menu1 = "SELECT * FROM tblshift WHERE ShiftID = $ShiftID";
-                                            $subresultMenu1 = mysqli_query($conn, $subselect_menu1);
-
-                                            while ($row_subdata1 = mysqli_fetch_assoc($subresultMenu1)) {
-                                                echo "<b>" . $row_subdata1['ShiftEN'] . '/' . "</b>";
+                                            if (isset($ShiftID)) {
+                                                $subselect_menu1 = "SELECT * FROM tblshift WHERE ShiftID = $ShiftID";
+                                                $subresultMenu1 = mysqli_query($conn, $subselect_menu1);
+    
+                                                while ($row_subdata1 = mysqli_fetch_assoc($subresultMenu1)) {
+                                                    echo "<b>" . $row_subdata1['ShiftEN'] . '/' . "</b>";
+                                                }
                                             }
-                                        }
-                                        if (isset($DegreeID)) {
-                                            $subselect_menu1 = "SELECT * FROM tbldegree WHERE DegreeID = $DegreeID";
-                                            $subresultMenu1 = mysqli_query($conn, $subselect_menu1);
-
-                                            while ($row_subdata1 = mysqli_fetch_assoc($subresultMenu1)) {
-                                                echo "<b>" . $row_subdata1['DegreeNameEN'] . '/' . "</b>";
+                                            if (isset($DegreeID)) {
+                                                $subselect_menu1 = "SELECT * FROM tbldegree WHERE DegreeID = $DegreeID";
+                                                $subresultMenu1 = mysqli_query($conn, $subselect_menu1);
+    
+                                                while ($row_subdata1 = mysqli_fetch_assoc($subresultMenu1)) {
+                                                    echo "<b>" . $row_subdata1['DegreeNameEN'] . '/' . "</b>";
+                                                }
                                             }
-                                        }
-                                        if (isset($AcademicYearID)) {
-                                            $subselect_menu1 = "SELECT * FROM tblacademicyear WHERE AcademicYearID = $AcademicYearID";
-                                            $subresultMenu1 = mysqli_query($conn, $subselect_menu1);
-
-                                            while ($row_subdata1 = mysqli_fetch_assoc($subresultMenu1)) {
-                                                echo "<b>" . $row_subdata1['AcademicYear'] . '/' . "</b>";
+                                            if (isset($AcademicYearID)) {
+                                                $subselect_menu1 = "SELECT * FROM tblacademicyear WHERE AcademicYearID = $AcademicYearID";
+                                                $subresultMenu1 = mysqli_query($conn, $subselect_menu1);
+    
+                                                while ($row_subdata1 = mysqli_fetch_assoc($subresultMenu1)) {
+                                                    echo "<b>" . $row_subdata1['AcademicYear'] . '/' . "</b>";
+                                                }
                                             }
-                                        }
-                                        if (isset($MajorID)) {
-                                            $subselect_menu1 = "SELECT * FROM tblmajor WHERE MajorID = $MajorID";
-                                            $subresultMenu1 = mysqli_query($conn, $subselect_menu1);
-
-                                            while ($row_subdata1 = mysqli_fetch_assoc($subresultMenu1)) {
-                                                echo "<b>" . $row_subdata1['MajorEN'] . '/' . "</b>";
+                                            if (isset($MajorID)) {
+                                                $subselect_menu1 = "SELECT * FROM tblmajor WHERE MajorID = $MajorID";
+                                                $subresultMenu1 = mysqli_query($conn, $subselect_menu1);
+    
+                                                while ($row_subdata1 = mysqli_fetch_assoc($subresultMenu1)) {
+                                                    echo "<b>" . $row_subdata1['MajorEN'] . '/' . "</b>";
+                                                }
                                             }
-                                        }
-                                        if (isset($BatchID)) {
-                                            $subselect_menu1 = "SELECT * FROM tblbatch WHERE BatchID = $BatchID";
-                                            $subresultMenu1 = mysqli_query($conn, $subselect_menu1);
-
-                                            while ($row_subdata1 = mysqli_fetch_assoc($subresultMenu1)) {
-                                                echo "<b>" . $row_subdata1['BatchEN'] . '/' . "</b>";
+                                            if (isset($BatchID)) {
+                                                $subselect_menu1 = "SELECT * FROM tblbatch WHERE BatchID = $BatchID";
+                                                $subresultMenu1 = mysqli_query($conn, $subselect_menu1);
+    
+                                                while ($row_subdata1 = mysqli_fetch_assoc($subresultMenu1)) {
+                                                    echo "<b>" . $row_subdata1['BatchEN'] . '/' . "</b>";
+                                                }
                                             }
-                                        }
-                                        if (isset($SemesterID)) {
-                                            $subselect_menu1 = "SELECT * FROM tblcampus WHERE CampusID = $CampusID";
-                                            $subresultMenu1 = mysqli_query($conn, $subselect_menu1);
-
-                                            while ($row_subdata1 = mysqli_fetch_assoc($subresultMenu1)) {
-                                                echo "<b>" . $row_subdata1['CampusEN'] . '.' . "</b>";
+                                            if (isset($SemesterID)) {
+                                                $subselect_menu1 = "SELECT * FROM tblcampus WHERE CampusID = $CampusID";
+                                                $subresultMenu1 = mysqli_query($conn, $subselect_menu1);
+    
+                                                while ($row_subdata1 = mysqli_fetch_assoc($subresultMenu1)) {
+                                                    echo "<b>" . $row_subdata1['CampusEN'] . '.' . "</b>";
+                                                }
                                             }
-                                        }
+                                        
 
                                         ?>
 
@@ -227,14 +229,14 @@ include ('./include/header.php');
 
 
                                             <div class="col-sm-12">
-                                                <label for="exampleInputUsername1">Subject Schedule:</label><br>
+                                               
                                                 <?php
                                                 $select_menu = "SELECT * FROM tblsubjectfall WHERE StudentStatusID = $StudentStatusID";
                                                 $resultMenu = mysqli_query($conn, $select_menu);
 
                                                 while ($row_data = mysqli_fetch_assoc($resultMenu)) {
                                                     $ScheduleID = $row_data['ScheduleID'];
-
+                                                  
                                                     $subselect_menu = "SELECT * FROM tblschedule WHERE ScheduleID = $ScheduleID";
                                                     $subresultMenu = mysqli_query($conn, $subselect_menu);
                                                     while ($subrow_data = mysqli_fetch_assoc($subresultMenu)) {
@@ -251,7 +253,8 @@ include ('./include/header.php');
                                                             $subselect_menu1 = "SELECT SubjectEN FROM tblsubject WHERE SubjectID = $SubjectID";
                                                             $subresultMenu1 = mysqli_query($conn, $subselect_menu1);
                                                             if ($row_subdata1 = mysqli_fetch_assoc($subresultMenu1)) {
-                                                                // echo "<b>" . $row_subdata1['SubjectEN'] . " / </b>";
+                                                             
+                                                                 echo "<label>Subject Schedule:</label><br>";
                                                                 echo "<b>" . $row_subdata1['SubjectEN'] . "</b>".'<br>';
                                                              
 
@@ -410,14 +413,18 @@ include ('./include/header.php');
                                                                     $subselect_menu1 = "SELECT CampusEN FROM tblcampus WHERE CampusID = $CampusID";
                                                                     $subresultMenu1 = mysqli_query($conn, $subselect_menu1);
                                                                     if ($row_subdata1 = mysqli_fetch_assoc($subresultMenu1)) {
-                                                                        echo "<b>" . $row_subdata1['CampusEN'] . ".</b>";
+                                                                        echo "<b>" . $row_subdata1['CampusEN'] . ".</b><br>";
+                                                                        echo"<hr>";
                                                                     }
                                                                 }
                                                             }
                                                         }
                                                     }
+                                                    
                                                 }
+                                                
                                                 ?>
+                                                
                                             </div>
                                         </div>
                                     </div>

@@ -59,9 +59,9 @@
                                                 <th>
                                                     N0.
                                                 </th>
-                                                <th>
+                                                <!-- <th>
                                                     Subject Name KH
-                                                </th>
+                                                </th> -->
                                                 <th>
                                                     Subject Name EN
                                                 </th>
@@ -85,82 +85,80 @@
                                                 </th>
                                             </tr>
                                         </thead>
-                                        <tbody>
-                                            <?php
-                                            while ($row = mysqli_fetch_assoc($result)) {
-                                                $MajorID = $row['MajorID'];
-                                                $YearID = $row['YearID'];
-                                                $SemesterID = $row['SemesterID'];
-                                                ?>
-                                                <tr>
-                                                    <td class="py-1">
-                                                        <b><?= $i++ ?>.</b>
-                                                        
-                                                    </td>
-                                                    <td>
-                                                       <b> <?= $row['SubjectKH'] ?></b>
-                                                    </td>
-                                                    <td>
-                                                        <b><?= $row['SubjectEN'] ?></b>
-                                                    </td>
-                                                    <td>
-                                                        <b><?= $row['CreditNumber'] ?></b>
-                                                    </td>
-                                                    <td>
-                                                        <b><?= $row['Hours'] ?></b>
-                                                    </td>
-                                                    <?php 
-                                                        //include "../connection/conn.php";
-                                                        $select_menu = "SELECT * FROM tblmajor WHERE MajorID = $MajorID";
-                                                        $resultMenu=mysqli_query($conn,$select_menu);
-                                                        while( $row_data=mysqli_fetch_assoc($resultMenu)){
-                                                    ?> 
-                                                        <td class="text-center ">
-                                                            <b>
-                                                                <?php echo $row_data['MajorEN'] ?>
-                                                            </b>
-                                                        </td>
-                                                    <?php } ?>
-                                                    <?php 
-                                                        //include "../connection/conn.php";
-                                                        $select_menu = "SELECT * FROM tblyear WHERE YearID = $YearID";
-                                                        $resultMenu=mysqli_query($conn,$select_menu);
-                                                        while( $row_data=mysqli_fetch_assoc($resultMenu)){
-                                                    ?> 
-                                                        <td class="text-center ">
-                                                            <b>
-                                                                <?php echo $row_data['YearEN'] ?>
-                                                            </b>
-                                                        </td>
-                                                    <?php } ?>
-                                                    <?php 
-                                                        //include "../connection/conn.php";
-                                                        $select_menu = "SELECT * FROM tblsemester WHERE SemesterID = $SemesterID";
-                                                        $resultMenu=mysqli_query($conn,$select_menu);
-                                                        while( $row_data=mysqli_fetch_assoc($resultMenu)){
-                                                    ?> 
-                                                        <td class="text-center ">
-                                                            <b>
-                                                                <?php echo $row_data['SemesterEN'] ?>
-                                                            </b>
-                                                        </td>
-                                                    <?php } ?>
-                                                   
-                                                    <td>
-                                                        <a href="c_subject.php?edit_subject=<?php echo $row['SubjectID'] ?> ">
-                                                            <button class="btn btn-outline-primary btn-sm edit_borrower"
-                                                                type="button"><i class="fa fa-edit">
-                                                                </i></button>
-                                                        </a>
-                                                        <a href="action.php?d_subject=<?php echo $row['SubjectID'] ?>" >
-                                                            <button class="btn btn-outline-danger btn-sm delete_borrower"
-                                                                type="button"><i class="fa fa-trash"></i></button>
-                                                        </a>
-                                                    </td>
-                                                </tr>
+<tbody>
+    <?php
+    while ($row = mysqli_fetch_assoc($result)) {
+        $MajorID = $row['MajorID'];
+        $YearID = $row['YearID'];
+        $SemesterID = $row['SemesterID'];
+        ?>
+        <tr>
+            <td class="py-1">
+                <b><?= $i++ ?>.</b>
+                
+            </td>
+            
+            <td>
+                <b><?= $row['SubjectEN'] ?></b>
+            </td>
+            <td>
+                <b><?= $row['CreditNumber'] ?></b>
+            </td>
+            <td>
+                <b><?= $row['Hours'] ?></b>
+            </td>
+            <?php 
+                
+                $select_menu = "SELECT * FROM tblmajor WHERE MajorID = $MajorID";
+                $resultMenu=mysqli_query($conn,$select_menu);
+                while( $row_data=mysqli_fetch_assoc($resultMenu)){
+            ?> 
+                <td class="text-center ">
+                    <b>
+                        <?php echo $row_data['MajorEN'] ?>
+                    </b>
+                </td>
+            <?php } ?>
+            <?php 
+                
+                $select_menu = "SELECT * FROM tblyear WHERE YearID = $YearID";
+                $resultMenu=mysqli_query($conn,$select_menu);
+                while( $row_data=mysqli_fetch_assoc($resultMenu)){
+            ?> 
+                <td class="text-center ">
+                    <b>
+                        <?php echo $row_data['YearEN'] ?>
+                    </b>
+                </td>
+            <?php } ?>
+            <?php 
+                
+                $select_menu = "SELECT * FROM tblsemester WHERE SemesterID = $SemesterID";
+                $resultMenu=mysqli_query($conn,$select_menu);
+                while( $row_data=mysqli_fetch_assoc($resultMenu)){
+            ?> 
+                <td class="text-center ">
+                    <b>
+                        <?php echo $row_data['SemesterEN'] ?>
+                    </b>
+                </td>
+            <?php } ?>
+            
+            <td>
+                <a href="c_subject.php?edit_subject=<?php echo $row['SubjectID'] ?> ">
+                    <button class="btn btn-outline-primary btn-sm edit_borrower"
+                        type="button"><i class="fa fa-edit">
+                        </i></button>
+                </a>
+                <a href="action.php?d_subject=<?php echo $row['SubjectID'] ?>" >
+                    <button class="btn btn-outline-danger btn-sm delete_borrower"
+                        type="button"><i class="fa fa-trash"></i></button>
+                </a>
+            </td>
+        </tr>
 
-                                            <?php } ?>
-                                        </tbody>
+    <?php } ?>
+</tbody>
 
                                     </table>
 

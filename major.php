@@ -58,9 +58,9 @@
                                                 <th>
                                                     N0.
                                                 </th>
-                                                <th>
+                                                <!-- <th>
                                                     Major Name KH
-                                                </th>
+                                                </th> -->
                                                 <th>
                                                     Major Name EN
                                                 </th>
@@ -83,9 +83,9 @@
                                                         <b><?= $i++ ?>.</b>
                                                         
                                                     </td>
-                                                    <td>
+                                                    <!-- <td>
                                                        <b> <?= $row['MajorKH'] ?></b>
-                                                    </td>
+                                                    </td> -->
                                                     <td>
                                                         <b><?= $row['MajorEN'] ?></b>
                                                     </td>

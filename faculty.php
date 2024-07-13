@@ -78,17 +78,17 @@
                                                 ?>
                                                 <tr>
                                                     <td class="py-1">
-                                                        <?= $i++ ?>.
+                                                        <b><?= $i++ ?>.</b>
                                                         
                                                     </td>
                                                     <td>
-                                                        <?= $row['FacultyKH'] ?>
+                                                       <b> <?= $row['FacultyKH'] ?></b>
                                                     </td>
                                                     <td>
-                                                        <?= $row['FacultyEN'] ?>
+                                                        <b><?= $row['FacultyEN'] ?></b>
                                                     </td>
                                                     <td>
-                                                        <?= $row['datetime'] ?>
+                                                        <b><?= $row['datetime'] ?></b>
                                                     </td>
                                                     <td>
                                                         <a href="c_faculty.php?edit_faculty=<?php echo $row['FacultyID'] ?> ">

@@ -2,6 +2,7 @@
 <html lang="en">
 
 <?php
+require('function.php');
 include ('./include/header.php');
 ?>
 
@@ -20,6 +21,7 @@ include ('./include/header.php');
       ?>
 
       <?php
+      
       include './connection/conn.php';
       if (isset($_GET['stuDetail'])) {
         $stu = $_GET['stuDetail'];
@@ -38,10 +40,12 @@ include ('./include/header.php');
             $BatchID = $row['BatchID'];
             $MajorID = $row['MajorID'];
           } else {
-            echo "No student found with the provided ID.";
+             $_SESSION['empitydata'] = "Data is empity !";
           }
         } else {
-          echo "Error executing query: " . mysqli_error($conn);
+          $_SESSION['empitydata'] = "Data is empity !";
+         
+           //echo "Error executing query: " . mysqli_error($conn);
         }
       }
       ?>
@@ -92,9 +96,11 @@ include ('./include/header.php');
 
                 <h4 class="card-title">Student Information</h4>
 
-<hr>
+                <hr>
 
-
+                <?php 
+                  empityData();
+                ?>
 
                 <div class="row pt-2">
                   <div class="col-md-4">
@@ -108,7 +114,7 @@ include ('./include/header.php');
                 </div>
                 <?php 
                         //  include_once 'Connection.php';
-                  $select_menu = "SELECT * FROM tblstudentstatus WHERE StudentID = $stu";
+                  $select_menu = "SELECT * FROM tblstudentstatus WHERE StudentID = $stu AND Status = 1";
                   $resultMenu =mysqli_query($conn,$select_menu);
                   while( $row_data=mysqli_fetch_assoc($resultMenu)){
                       $ProgramID = $row_data['ProgramID'];

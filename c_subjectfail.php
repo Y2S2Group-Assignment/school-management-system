@@ -29,11 +29,31 @@ include ('./include/header.php');
                 $query = "SELECT * FROM tblstudentstatus WHERE StudentID = $edit ";
                 $result = mysqli_query($conn, $query);
                  $row = mysqli_fetch_assoc($result);
+            } 
 
-                 $StudentStatusID = $row['StudentStatusID'];
+            // if (isset($_GET['edit_subjectfail'])) {
+            //     $edit = $_GET['edit_subjectfail'];
                 
- 
-            }
+                
+            //     $select_main = "SELECT * FROM tblstudentstatus WHERE StudentID = $edit";
+            //     $resultMain = mysqli_query($conn, $select_main);
+            
+            //     if ($resultMain) {
+            //         $row = mysqli_fetch_assoc($resultMain);
+            //         if ($row) {
+            //             $StudentStatusID = $row['StudentStatusID'];
+            //         } else {
+            //             echo "No data found for the given StudentID.";
+            //             exit;
+            //         }
+            //     } else {
+            //         echo "Error executing query: " . mysqli_error($conn);
+            //         exit;
+            //     }
+            // } else {
+            //     echo "No StudentID provided.";
+            //     exit;
+            // }
         
             ?>
             
@@ -48,8 +68,8 @@ include ('./include/header.php');
                                     <h4 class="card-title">Student Subject Fail Form</h4>
                                     <form class="form-sample" action="action.php" method="POST">
 
-                                        <input type="hidden" name="SubjectFallID"
-                                            value="<?php echo isset($row['SubjectFallID']) ? $row['SubjectFallID'] : '' ?>">
+                                        <!-- <input type="hidden" name="SubjectFallID"
+                                            value="<?php echo isset($row['SubjectFallID']) ? $row['SubjectFallID'] : '' ?>"> -->
 
                                         <div class="row">
 
@@ -63,7 +83,7 @@ include ('./include/header.php');
                                                             aria-label="Floating label select example">
                                                             <option selected disabled value="">Please Select</option>
                                                             <?php
-                                                            $select_mainmenu = "SELECT * FROM tblstudentstatus";
+                                                            $select_mainmenu = "SELECT * FROM tblstudentstatus ";
                                                             $resultMain = mysqli_query($conn, $select_mainmenu);
 
                                                             while ($Main_row = mysqli_fetch_array($resultMain)) {
@@ -171,16 +191,26 @@ include ('./include/header.php');
                                                     </div>
                                                 </div>
                                             </div>
-                                         
+                                        
                                             <div class="col-md-4">
                                                 <div class="form-group row">
                                                     <?php
-                                                    $select_main = " SELECT * FROM tblsubjectfall WHERE StudentStatusID = $StudentStatusID ";
+                                                    $select_main = " SELECT * FROM tblstudentstatus Where StudentID= $StudentID";
                                                     $resultMain = mysqli_query($conn, $select_main);
 
                                                     while ($row = mysqli_fetch_array($resultMain)) {
-                                                        $ScheduleID = $row['ScheduleID'];
+                                                        $StudentStatusID = $row['StudentStatusID'];
+
+                                                        if (isset($StudentStatusID)) {
+                                                            $subselect_menu11 = "SELECT * FROM tblsubjectfall WHERE StudentStatusID = $StudentStatusID";
+                                                            $subresultMenu11 = mysqli_query($conn, $subselect_menu11);
+                                                            if ($row_subdata11 = mysqli_fetch_assoc($subresultMenu11)) {
+                                                                $ScheduleID = $row_subdata11['ScheduleID'];
+                                                              
+                                                            }
+                                                        }
                                                         ?>
+                                                       
                                                         <div class="col-sm-12">
                                                             <label for="exampleInputUsername1">Schedule</label>
                                                             <select class="form-control border border-primary "
@@ -188,7 +218,7 @@ include ('./include/header.php');
                                                                 aria-label="Floating label select example">
                                                                 <option selected disabled value="">Please Select</option>
                                                                 <?php
-                                                                $select_mainmenu = "SELECT * FROM tblschedule WHERE ScheduleID = $ScheduleID";
+                                                                $select_mainmenu = "SELECT * FROM tblschedule ";
                                                                 $resultMain = mysqli_query($conn, $select_mainmenu);
 
                                                                 while ($Main_row = mysqli_fetch_array($resultMain)) {
@@ -324,7 +354,7 @@ include ('./include/header.php');
                                                                         }
                                                                     }
 
-                                                                    $selected = ($Main_row['ScheduleID'] == $row['ScheduleID']) ? 'selected' : '';
+                                                                    $selected = ($Main_row['ScheduleID'] == $row_subdata11['ScheduleID']) ? 'selected' : '';
 
                                                                     echo "<option value='" . $ScheduleID . "' $selected>
                                                             " . $ScheduleID . " - Subject:" . $SubjectEN . " - Lecturer:" . $LecturerName . " / Program: " . $YearEN . " - " . $SemesterEN . " - " . $DegreeNameEN . " - " . $AcademicYear . " - " . $MajorEN . " - " . $BatchEN . " - " . $CampusEN . "</option>";
@@ -334,6 +364,11 @@ include ('./include/header.php');
                                                         </div>
                                                     </div>
                                                 <?php } ?>
+
+
+
+                                              
+
 
                                             </div>
 

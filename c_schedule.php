@@ -46,188 +46,6 @@ include ('./include/header.php');
                                             value="<?php echo isset($row['ScheduleID']) ? $row['ScheduleID'] : '' ?>">
 
                                         <div class="row">
-                                            
-                                            <div class="col-md-4">
-                                                <div class="form-group row">
-
-                                                    <div class="col-sm-12">
-                                                        <label for="exampleInputUsername1">Subject</label>
-                                                        <select class="form-control border border-primary "
-                                                            name="SubjectID" id="floatingSelect"
-                                                            aria-label="Floating label select example">
-                                                            <option selected disabled value="">Please Select</option>
-                                                            <?php
-
-                                                            $select_mainmenu = "SELECT * FROM tblsubject";
-                                                            $resultMain = mysqli_query($conn, $select_mainmenu);
-
-                                                            while ($Main_row = mysqli_fetch_array($resultMain)) {
-                                                                $selected = ($Main_row['SubjectID'] == $row['SubjectID']) ?
-                                                                    'selected' : '';
-                                                                echo "<option value='" . $Main_row['SubjectID'] . " ' $selected>" .
-                                                                    $Main_row['SubjectID'] .'.'.$Main_row['SubjectEN']. "</option>";
-                                                            }
-                                                            ;
-                                                            ?>
-                                                        </select>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="col-md-4">
-                                                <div class="form-group row">
-
-                                                    <div class="col-sm-12">
-                                                        <label for="exampleInputUsername1">Lecturer</label>
-                                                        <select class="form-control border border-primary "
-                                                            name="LecturerID" id="floatingSelect"
-                                                            aria-label="Floating label select example">
-                                                            <option selected disabled value="">Please Select</option>
-                                                            <?php
-
-                                                            $select_mainmenu = "SELECT * FROM tbllecturer";
-                                                            $resultMain = mysqli_query($conn, $select_mainmenu);
-
-                                                            while ($Main_row = mysqli_fetch_array($resultMain)) {
-                                                                $selected = ($Main_row['LecturerID'] == $row['LecturerID']) ?
-                                                                    'selected' : '';
-                                                                echo "<option value='" . $Main_row['LecturerID'] . " ' $selected>" .
-                                                                $Main_row['LecturerID'] .'.'.$Main_row['LecturerEN'] . "</option>";
-                                                            }
-                                                            ;
-                                                            ?>
-                                                        </select>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="col-md-4">
-                                                <div class="form-group row">
-
-                                                    <div class="col-sm-12">
-                                                        <label for="exampleInputUsername1">Day Week</label>
-                                                        <select class="form-control border border-primary "
-                                                            name="DayWeekID" id="floatingSelect"
-                                                            aria-label="Floating label select example">
-                                                            <option selected disabled value="">Please Select</option>
-                                                            <?php
-                                                      
-                                                        $select_mainmenu = "SELECT * FROM tbldayweek";
-                                                        $resultMain = mysqli_query($conn, $select_mainmenu);
-
-                                                        while ($Main_row = mysqli_fetch_array($resultMain)) {
-
-                                                            $DayWeekID = $Main_row['DayWeekID'];   
-                                                            $DayWeekName = $Main_row['DayWeekName']; 
-                                                            $ShiftID = $Main_row['ShiftID'];
-
-                                                            
-                                                            
-                                                            if (isset($ShiftID)) {
-                                                            $subselect_menu1 = "SELECT * FROM tblshift WHERE ShiftID = $ShiftID";
-                                                            $subresultMenu1 = mysqli_query($conn, $subselect_menu1);
-                                                            if ($row_subdata1 = mysqli_fetch_assoc($subresultMenu1)) {
-                                                                $ShiftEN = $row_subdata1['ShiftEN'];
-                                                            }
-                                                            }
-
-                                                           
-                                                            $selected = ($Main_row['DayWeekID'] == $row['DayWeekID']) ? 'selected' : '';
-
-                                                            
-                                                            echo "<option value='" . $DayWeekID . "' $selected>
-                                                            " . $DayWeekID . " - ". $ShiftEN . " - ". $DayWeekName ."</option>";
-                                                        }
-                                                        ?>
-                                                        </select>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-
-                                        <div class="row">
-                                            <div class="col-md-4">
-                                                <div class="form-group row">
-
-                                                    <div class="col-sm-12">
-                                                        <label for="exampleInputUsername1">Time</label>
-                                                        <select class="form-control border border-primary "
-                                                            name="TimeID" id="floatingSelect"
-                                                            aria-label="Floating label select example">
-                                                            <option selected disabled value="">Please Select</option>
-                                                            <?php
-                                                        
-                                                        $select_mainmenu = "SELECT * FROM tbltime";
-                                                        $resultMain = mysqli_query($conn, $select_mainmenu);
-
-                                                        while ($Main_row = mysqli_fetch_array($resultMain)) {
-
-                                                            $TimeID = $Main_row['TimeID'];   
-                                                            $TimeName = $Main_row['TimeName']; 
-                                                            $ShiftID = $Main_row['ShiftID'];
-
-                                                            
-                                                            
-                                                            if (isset($ShiftID)) {
-                                                            $subselect_menu1 = "SELECT * FROM tblshift WHERE ShiftID = $ShiftID";
-                                                            $subresultMenu1 = mysqli_query($conn, $subselect_menu1);
-                                                            if ($row_subdata1 = mysqli_fetch_assoc($subresultMenu1)) {
-                                                                $ShiftEN = $row_subdata1['ShiftEN'];
-                                                            }
-                                                            }
-
-                                                            
-                                                            $selected = ($Main_row['TimeID'] == $row['TimeID']) ? 'selected' : '';
-
-                                                            
-                                                            echo "<option value='" . $TimeID . "' $selected>
-                                                            " . $TimeID . " - ". $ShiftEN . " - ". $TimeName ."</option>";
-                                                        }
-                                                        ?>
-                                                        </select>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="col-md-4">
-                                                <div class="form-group row">
-
-                                                    <div class="col-sm-12">
-                                                        <label for="exampleInputUsername1">Room</label>
-                                                        <select class="form-control border border-primary "
-                                                            name="RoomID" id="floatingSelect"
-                                                            aria-label="Floating label select example">
-                                                            <option selected disabled value="">Please Select</option>
-                                                            <?php
-                                                        
-                                                        $select_mainmenu = "SELECT * FROM tblroom ";
-                                                        $resultMain = mysqli_query($conn, $select_mainmenu);
-
-                                                        while ($Main_row = mysqli_fetch_array($resultMain)) {
-
-                                                            $RoomID = $Main_row['RoomID'];   
-                                                            $RoomName = $Main_row['RoomName']; 
-                                                            $CampusID = $Main_row['CampusID'];
-
-                                                            
-                                                            
-                                                            if (isset($CampusID)) {
-                                                            $subselect_menu1 = "SELECT * FROM tblcampus WHERE CampusID = $CampusID";
-                                                            $subresultMenu1 = mysqli_query($conn, $subselect_menu1);
-                                                            if ($row_subdata1 = mysqli_fetch_assoc($subresultMenu1)) {
-                                                                $CampusEN = $row_subdata1['CampusEN'];
-                                                            }
-                                                            }
-
-                                                            
-                                                            $selected = ($Main_row['CampusID'] == $row['CampusID']) ? 'selected' : '';
-
-                                                            
-                                                            echo "<option value='" . $RoomID . "' $selected>
-                                                            " . $RoomID . " - ". $CampusEN . " - ". $RoomName ."</option>";
-                                                        }
-                                                        ?>
-                                                        </select>
-                                                    </div>
-                                                </div>
-                                            </div>
                                             <div class="col-md-4">
                                                 <div class="form-group row">
 
@@ -326,6 +144,190 @@ include ('./include/header.php');
                                                     </div>
                                                 </div>
                                             </div>
+                                            
+                                            <div class="col-md-4">
+                                                <div class="form-group row">
+
+                                                    <div class="col-sm-12">
+                                                        <label for="exampleInputUsername1">Subject</label>
+                                                        <select class="form-control border border-primary "
+                                                            name="SubjectID" id="floatingSelect"
+                                                            aria-label="Floating label select example">
+                                                            <option selected disabled value="">Please Select</option>
+                                                            <?php
+
+                                                            $select_mainmenu = "SELECT * FROM tblsubject";
+                                                            $resultMain = mysqli_query($conn, $select_mainmenu);
+
+                                                            while ($Main_row = mysqli_fetch_array($resultMain)) {
+                                                                $selected = ($Main_row['SubjectID'] == $row['SubjectID']) ?
+                                                                    'selected' : '';
+                                                                echo "<option value='" . $Main_row['SubjectID'] . " ' $selected>" .
+                                                                    $Main_row['SubjectID'] .'.'.$Main_row['SubjectEN']. "</option>";
+                                                            }
+                                                            ;
+                                                            ?>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-4">
+                                                <div class="form-group row">
+
+                                                    <div class="col-sm-12">
+                                                        <label for="exampleInputUsername1">Lecturer</label>
+                                                        <select class="form-control border border-primary "
+                                                            name="LecturerID" id="floatingSelect"
+                                                            aria-label="Floating label select example">
+                                                            <option selected disabled value="">Please Select</option>
+                                                            <?php
+
+                                                            $select_mainmenu = "SELECT * FROM tbllecturer";
+                                                            $resultMain = mysqli_query($conn, $select_mainmenu);
+
+                                                            while ($Main_row = mysqli_fetch_array($resultMain)) {
+                                                                $selected = ($Main_row['LecturerID'] == $row['LecturerID']) ?
+                                                                    'selected' : '';
+                                                                echo "<option value='" . $Main_row['LecturerID'] . " ' $selected>" .
+                                                                $Main_row['LecturerID'] .'.'.$Main_row['LecturerEN'] . "</option>";
+                                                            }
+                                                            ;
+                                                            ?>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                           
+                                        </div>
+
+                                        <div class="row">
+                                        <div class="col-md-4">
+                                                <div class="form-group row">
+
+                                                    <div class="col-sm-12">
+                                                        <label for="exampleInputUsername1">Day Week</label>
+                                                        <select class="form-control border border-primary "
+                                                            name="DayWeekID" id="floatingSelect"
+                                                            aria-label="Floating label select example">
+                                                            <option selected disabled value="">Please Select</option>
+                                                            <?php
+                                                      
+                                                        $select_mainmenu = "SELECT * FROM tbldayweek";
+                                                        $resultMain = mysqli_query($conn, $select_mainmenu);
+
+                                                        while ($Main_row = mysqli_fetch_array($resultMain)) {
+
+                                                            $DayWeekID = $Main_row['DayWeekID'];   
+                                                            $DayWeekName = $Main_row['DayWeekName']; 
+                                                            $ShiftID = $Main_row['ShiftID'];
+
+                                                            
+                                                            
+                                                            if (isset($ShiftID)) {
+                                                            $subselect_menu1 = "SELECT * FROM tblshift WHERE ShiftID = $ShiftID";
+                                                            $subresultMenu1 = mysqli_query($conn, $subselect_menu1);
+                                                            if ($row_subdata1 = mysqli_fetch_assoc($subresultMenu1)) {
+                                                                $ShiftEN = $row_subdata1['ShiftEN'];
+                                                            }
+                                                            }
+
+                                                           
+                                                            $selected = ($Main_row['DayWeekID'] == $row['DayWeekID']) ? 'selected' : '';
+
+                                                            
+                                                            echo "<option value='" . $DayWeekID . "' $selected>
+                                                            " . $DayWeekID . " - ". $DayWeekName ."</option>";
+                                                        }
+                                                        ?>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-4">
+                                                <div class="form-group row">
+
+                                                    <div class="col-sm-12">
+                                                        <label for="exampleInputUsername1">Time</label>
+                                                        <select class="form-control border border-primary "
+                                                            name="TimeID" id="floatingSelect"
+                                                            aria-label="Floating label select example">
+                                                            <option selected disabled value="">Please Select</option>
+                                                            <?php
+                                                        
+                                                        $select_mainmenu = "SELECT * FROM tbltime";
+                                                        $resultMain = mysqli_query($conn, $select_mainmenu);
+
+                                                        while ($Main_row = mysqli_fetch_array($resultMain)) {
+
+                                                            $TimeID = $Main_row['TimeID'];   
+                                                            $TimeName = $Main_row['TimeName']; 
+                                                            $ShiftID = $Main_row['ShiftID'];
+
+                                                            
+                                                            
+                                                            if (isset($ShiftID)) {
+                                                            $subselect_menu1 = "SELECT * FROM tblshift WHERE ShiftID = $ShiftID";
+                                                            $subresultMenu1 = mysqli_query($conn, $subselect_menu1);
+                                                            if ($row_subdata1 = mysqli_fetch_assoc($subresultMenu1)) {
+                                                                $ShiftEN = $row_subdata1['ShiftEN'];
+                                                            }
+                                                            }
+
+                                                            
+                                                            $selected = ($Main_row['TimeID'] == $row['TimeID']) ? 'selected' : '';
+
+                                                            
+                                                            echo "<option value='" . $TimeID . "' $selected>
+                                                            " . $TimeID . " - ". $ShiftEN . " - ". $TimeName ."</option>";
+                                                        }
+                                                        ?>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-4">
+                                                <div class="form-group row">
+
+                                                    <div class="col-sm-12">
+                                                        <label for="exampleInputUsername1">Room</label>
+                                                        <select class="form-control border border-primary "
+                                                            name="RoomID" id="floatingSelect"
+                                                            aria-label="Floating label select example">
+                                                            <option selected disabled value="">Please Select</option>
+                                                            <?php
+                                                        
+                                                        $select_mainmenu = "SELECT * FROM tblroom ";
+                                                        $resultMain = mysqli_query($conn, $select_mainmenu);
+
+                                                        while ($Main_row = mysqli_fetch_array($resultMain)) {
+
+                                                            $RoomID = $Main_row['RoomID'];   
+                                                            $RoomName = $Main_row['RoomName']; 
+                                                            $CampusID = $Main_row['CampusID'];
+
+                                                            
+                                                            
+                                                            if (isset($CampusID)) {
+                                                            $subselect_menu1 = "SELECT * FROM tblcampus WHERE CampusID = $CampusID";
+                                                            $subresultMenu1 = mysqli_query($conn, $subselect_menu1);
+                                                            if ($row_subdata1 = mysqli_fetch_assoc($subresultMenu1)) {
+                                                                $CampusEN = $row_subdata1['CampusEN'];
+                                                            }
+                                                            }
+
+                                                            
+                                                            $selected = ($Main_row['RoomID'] == $row['RoomID']) ? 'selected' : '';
+
+                                                            
+                                                            echo "<option value='" . $RoomID . "' $selected>
+                                                            " . $RoomID . " - ". $CampusEN . " - ". $RoomName ."</option>";
+                                                        }
+                                                        ?>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                            </div>
+
                                          
 
                                         </div>
@@ -373,7 +375,7 @@ include ('./include/header.php');
                            
 
 
-                                        <a href="schedule.php"><button type="button" class="btn btn-danger">
+                                        <a href="stuSchedule.php"><button type="button" class="btn btn-danger">
                                             Cancel
                                         </button>
                                         </a>

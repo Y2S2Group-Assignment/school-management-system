@@ -2,7 +2,7 @@
 <html lang="en">
 
 <?php
-require("function.php");
+require ("function.php");
 include ('./include/header.php');
 ?>
 
@@ -29,7 +29,9 @@ include ('./include/header.php');
         $query = "SELECT * FROM tblstudentinfo WHERE StudentID = $edit ";
         $result = mysqli_query($conn, $query);
         $row = mysqli_fetch_assoc($result);
-      }
+
+        // $MainProgramID = $row['ProgramID'];
+       }
       ?>
       <div class="main-panel">
         <div class="content-wrapper">
@@ -38,8 +40,91 @@ include ('./include/header.php');
               <div class="card">
                 <div class="card-body">
                   <h4 class="card-title">Student Information Form</h4>
-                 
+
                   <form class="form-sample" action="action.php" method="POST" enctype="multipart/form-data">
+                    <input type="hidden" name="StudentID"
+                    value="<?php echo isset($row['StudentID']) ? $row['StudentID'] : '' ?>">
+                    <p class="card-description pt-2">
+                      Program
+                    </p>
+
+                    <div class="row">
+                      <div class="col-md-12">
+                        <div class="form-group row">
+
+
+
+                          <div class="col-sm-9">
+                            <label for="exampleInputUsername1">Program</label>
+                            <?php
+                            // $select_content = "SELECT * FROM tblprogram ORDER BY YearID ASC";
+
+                            $select_content = "SELECT * FROM tblprogram ORDER BY YearID ASC, SemesterID ASC";
+
+                            // $select_content = "SELECT * FROM tblprogram ";
+
+                            $result = mysqli_query($conn, $select_content);
+                            ?>
+
+                            <select required class="form-control form-control-sm border-primary" name="ProgramID"
+                              id="">
+                              <option selected disabled> Select Program</option>
+                              <?php
+                              while ($sub_row = mysqli_fetch_array($result)) {
+                                $YearID = $sub_row['YearID'];
+                                $SemesterID = $sub_row['SemesterID'];
+                                $ShiftID = $sub_row['ShiftID'];
+                                $DegreeID = $sub_row['DegreeID'];
+                                $AcademicYearID = $sub_row['AcademicYearID'];
+                                $MajorID = $sub_row['MajorID'];
+                                $BatchID = $sub_row['BatchID'];
+                                $CampusID = $sub_row['CampusID'];
+                                $StartDate = $sub_row['StartDate'];
+                                $EndDate = $sub_row['EndDate'];
+                                $CreatedDate = $sub_row['CreatedDate'];
+                                $ProgramID = $sub_row['ProgramID'];
+
+                                $YearNameEN = mysqli_fetch_assoc(mysqli_query($conn, "SELECT YearEN FROM tblyear WHERE YearID = $YearID"))['YearEN'] ?? '';
+                                $SemesterNameEN = mysqli_fetch_assoc(mysqli_query($conn, "SELECT SemesterEN FROM tblSemester WHERE SemesterID = $SemesterID"))['SemesterEN'] ?? '';
+                                $ShiftNameEN = mysqli_fetch_assoc(mysqli_query($conn, "SELECT ShiftEN FROM tblShift WHERE ShiftID = $ShiftID"))['ShiftEN'] ?? '';
+                                $DegreeNameEN = mysqli_fetch_assoc(mysqli_query($conn, "SELECT DegreeNameEN FROM tblDegree WHERE DegreeID = $DegreeID"))['DegreeNameEN'] ?? '';
+                                $AcademicYear = mysqli_fetch_assoc(mysqli_query($conn, "SELECT AcademicYear FROM tblAcademicYear WHERE AcademicYearID = $AcademicYearID"))['AcademicYear'] ?? '';
+                                $MajorNameEN = mysqli_fetch_assoc(mysqli_query($conn, "SELECT MajorEN FROM tblMajor WHERE MajorID = $MajorID"))['MajorEN'] ?? '';
+                                $BatchNameEN = mysqli_fetch_assoc(mysqli_query($conn, "SELECT BatchEN FROM tblBatch WHERE BatchID = $BatchID"))['BatchEN'] ?? '';
+                                $CampusNameEN = mysqli_fetch_assoc(mysqli_query($conn, "SELECT CampusEN FROM tblCampus WHERE CampusID = $CampusID"))['CampusEN'] ?? '';
+
+
+                               
+                                $selected = ($row['ProgramID'] == $sub_row['ProgramID']) ?
+                                'selected' : '';
+
+                                ?>
+
+                             
+
+                                <option value="<?php echo $sub_row["ProgramID"]; ?> " <?php echo $selected; ?>>
+                                  <?php echo $MajorNameEN
+                                    . " [" . $DegreeNameEN . "]"
+                                    . "-[" . $BatchNameEN . "]"
+                                    . "-[" . $ShiftNameEN . "]"
+                                    . "-[" . $YearNameEN . "]"
+                                    . "-[" . $SemesterNameEN . "]"
+                                    . "-[" . $AcademicYear . "] "
+                                    . "  [Start: " . $StartDate . " "
+                                    . " End: " . $EndDate . " "
+                                    //   . " Created: " . $CreatedDate . "]"
+                                    ?>
+                                </option>
+                                <!-- &nbsp;<br/> -->
+                                <?php
+                              }
+                              ?>
+                            </select>
+                          </div>
+                          
+                        </div>
+                      </div>
+                    </div>
                     <p class="card-description">
                       Information
                     </p>
@@ -47,13 +132,13 @@ include ('./include/header.php');
                       <div class="col-md-4">
                         <div class="form-group row">
 
-                          <input type="hidden" name="StudentID"
-                            value="<?php echo isset($row['StudentID']) ? $row['StudentID'] : '' ?>">
+                          <!-- <input type="hidden" name="StudentID"
+                            value="<?php echo isset($row['StudentID']) ? $row['StudentID'] : '' ?>"> -->
 
                           <div class="col-sm-12">
                             <label for="exampleInputUsername1">Khmer Name</label>
                             <input type="text" class="form-control border border-primary " id="exampleInputUsername1"
-                              placeholder="Khmer Name"   name="NameInKhmer"
+                              placeholder="Khmer Name" name="NameInKhmer"
                               value="<?php echo isset($row['NameInKhmer']) ? $row['NameInKhmer'] : '' ?>">
                           </div>
                         </div>
@@ -75,7 +160,7 @@ include ('./include/header.php');
                           <div class="col-sm-12">
                             <label for="exampleInputUsername1">Family Name</label>
                             <input type="text" class="form-control border border-primary " id="exampleInputUsername1"
-                              placeholder="Family Name"  name="FamilyName"
+                              placeholder="Family Name" name="FamilyName"
                               value="<?php echo isset($row['FamilyName']) ? $row['FamilyName'] : '' ?>">
                           </div>
                         </div>
@@ -100,23 +185,23 @@ include ('./include/header.php');
 
                           <div class="col-sm-12">
                             <label for="exampleInputUsername1">Gender</label>
-                              <select class="form-control border border-primary " name="SexID" id="floatingSelect"
-                                    aria-label="Floating label select example">
-                                    <option selected disabled value="">Please Select</option>
-                                    <?php
+                            <select class="form-control border border-primary " name="SexID" id="floatingSelect"
+                              aria-label="Floating label select example">
+                              <option selected disabled value="">Please Select</option>
+                              <?php
 
-                                      $select_mainmenu = "SELECT * FROM tblsex";
-                                      $resultMain = mysqli_query($conn, $select_mainmenu);
+                              $select_mainmenu = "SELECT * FROM tblsex";
+                              $resultMain = mysqli_query($conn, $select_mainmenu);
 
-                                      while ($Main_row = mysqli_fetch_array($resultMain)) {
-                                          $selected = ($Main_row['SexID'] == $row['SexID']) ?
-                                              'selected' : '';
-                                          echo "<option value='" . $Main_row['SexID'] . " ' $selected>" .
-                                              $Main_row['SexEN'] . "</option>";
-                                      }
-                                      ;
-                                    ?>
-                              </select>
+                              while ($Main_row = mysqli_fetch_array($resultMain)) {
+                                $selected = ($Main_row['SexID'] == $row['SexID']) ?
+                                  'selected' : '';
+                                echo "<option value='" . $Main_row['SexID'] . " ' $selected>" .
+                                  $Main_row['SexEN'] . "</option>";
+                              }
+                              ;
+                              ?>
+                            </select>
                           </div>
                         </div>
                       </div>
@@ -142,23 +227,23 @@ include ('./include/header.php');
 
                           <div class="col-sm-12">
                             <label for="exampleInputUsername1">Nationality</label>
-                              <select class="form-control border border-primary " name="NationalityID" id="floatingSelect"
-                                    aria-label="Floating label select example">
-                                    <option selected disabled value="">Please Select</option>
-                                    <?php
+                            <select class="form-control border border-primary " name="NationalityID" id="floatingSelect"
+                              aria-label="Floating label select example">
+                              <option selected disabled value="">Please Select</option>
+                              <?php
 
-                                      $select_mainmenu = "SELECT * FROM tblnationality";
-                                      $resultMain = mysqli_query($conn, $select_mainmenu);
+                              $select_mainmenu = "SELECT * FROM tblnationality";
+                              $resultMain = mysqli_query($conn, $select_mainmenu);
 
-                                      while ($Main_row = mysqli_fetch_array($resultMain)) {
-                                          $selected = ($Main_row['NationalityID'] == $row['NationalityID']) ?
-                                              'selected' : '';
-                                          echo "<option value='" . $Main_row['NationalityID'] . " ' $selected>" .
-                                              $Main_row['NationalityEN'] . "</option>";
-                                      }
-                                      ;
-                                    ?>
-                              </select>
+                              while ($Main_row = mysqli_fetch_array($resultMain)) {
+                                $selected = ($Main_row['NationalityID'] == $row['NationalityID']) ?
+                                  'selected' : '';
+                                echo "<option value='" . $Main_row['NationalityID'] . " ' $selected>" .
+                                  $Main_row['NationalityEN'] . "</option>";
+                              }
+                              ;
+                              ?>
+                            </select>
                           </div>
                         </div>
                       </div>
@@ -167,25 +252,25 @@ include ('./include/header.php');
 
                           <div class="col-sm-12">
                             <label for="exampleInputUsername1">Country</label>
-                              <select class="form-control border border-primary " name="CountryID" id="floatingSelect"
-                                    aria-label="Floating label select example">
-                                    <option selected disabled value="">Please Select</option>
+                            <select class="form-control border border-primary " name="CountryID" id="floatingSelect"
+                              aria-label="Floating label select example">
+                              <option selected disabled value="">Please Select</option>
 
-                                    <?php
+                              <?php
 
-                                      $select_mainmenu = "SELECT * FROM tblcountry";
-                                      $resultMain = mysqli_query($conn, $select_mainmenu);
+                              $select_mainmenu = "SELECT * FROM tblcountry";
+                              $resultMain = mysqli_query($conn, $select_mainmenu);
 
-                                      while ($Main_row = mysqli_fetch_array($resultMain)) {
-                                        
-                                          $selected = ($Main_row['CountryID'] == $row['CountryID']) ?
-                                              'selected' : '';
-                                          echo "<option value='" . $Main_row['CountryID'] . " ' $selected>" .
-                                              $Main_row['CountryEN'] . "</option>";
-                                      }
-                                      ;
-                                    ?>
-                              </select>
+                              while ($Main_row = mysqli_fetch_array($resultMain)) {
+
+                                $selected = ($Main_row['CountryID'] == $row['CountryID']) ?
+                                  'selected' : '';
+                                echo "<option value='" . $Main_row['CountryID'] . " ' $selected>" .
+                                  $Main_row['CountryEN'] . "</option>";
+                              }
+                              ;
+                              ?>
+                            </select>
                           </div>
                         </div>
                       </div>
@@ -232,7 +317,7 @@ include ('./include/header.php');
                           <div class="col-sm-12">
                             <label for="exampleInputUsername1">Email</label>
                             <input type="text" class="form-control border border-primary " id="exampleInputUsername1"
-                              placeholder="Email"name="Email"
+                              placeholder="Email" name="Email"
                               value="<?php echo isset($row['Email']) ? $row['Email'] : '' ?>">
                           </div>
                         </div>
@@ -244,10 +329,10 @@ include ('./include/header.php');
 
                           <div class="col-sm-12">
                             <label for="exampleInputUsername1">Photo</label><br>
-                            <img src="./image/<?php echo isset($row['Photo']) ? $row['Photo'] : '' ?>" class="pb-3" width="150px">
+                            <img src="./image/<?php echo isset($row['Photo']) ? $row['Photo'] : '' ?>" class="pb-3"
+                              width="150px">
                             <input type="file" class="form-control border border-primary " id="exampleInputUsername1"
-                              placeholder="Photo"name="Photo"
-                              value="">
+                              placeholder="Photo" name="Photo" value="">
                           </div>
                         </div>
                       </div>
@@ -263,7 +348,7 @@ include ('./include/header.php');
                           <div class="col-sm-12">
                             <label for="exampleInputUsername1">Address</label>
                             <input type="text" class="form-control border border-primary " id="exampleInputUsername1"
-                              placeholder="Address"name="CurrentAddress"
+                              placeholder="Address" name="CurrentAddress"
                               value="<?php echo isset($row['CurrentAddress']) ? $row['CurrentAddress'] : '' ?>">
                           </div>
                         </div>
@@ -274,7 +359,7 @@ include ('./include/header.php');
                           <div class="col-sm-12">
                             <label for="exampleInputUsername1">Current Address</label>
                             <input type="text" class="form-control border border-primary " id="exampleInputUsername1"
-                              placeholder="Current Address"name="CurrentAddressPP"
+                              placeholder="Current Address" name="CurrentAddressPP"
                               value="<?php echo isset($row['CurrentAddressPP']) ? $row['CurrentAddressPP'] : '' ?>">
                           </div>
                         </div>
@@ -285,7 +370,7 @@ include ('./include/header.php');
                           <div class="col-sm-12">
                             <label for="exampleInputUsername1">Register Date</label>
                             <input type="date" class="form-control border border-primary " id="exampleInputUsername1"
-                              placeholder="Rigister Date"name="RegisterDate"
+                              placeholder="Rigister Date" name="RegisterDate"
                               value="<?php echo isset($row['RegisterDate']) ? $row['RegisterDate'] : '' ?>">
                           </div>
                         </div>
@@ -295,13 +380,13 @@ include ('./include/header.php');
 
 
 
-                    <a href="stuList.php"><button type="button" class="btn btn-danger">
+                    <a href="informationList.php"><button type="button" class="btn btn-danger">
                         Cancel
                       </button>
                     </a>
 
                     <button type="submit" class="btn btn-primary" name="c_information">Submit</button>
-                   
+
                   </form>
                 </div>
               </div>
@@ -309,30 +394,31 @@ include ('./include/header.php');
           </div>
 
 
-        
-      </div>
-      <!-- content-wrapper ends -->
-      <!-- partial:./partials/_footer.html -->
-      <footer class="footer">
-        <div class="card">
-          <div class="card-body">
-            <div class="d-sm-flex justify-content-center justify-content-sm-between">
-              <span class="text-muted d-block text-center text-sm-left d-sm-inline-block">Copyright © bootstrapdash.com
-                2020</span>
-              <span class="text-muted d-block text-center text-sm-left d-sm-inline-block">Distributed By: <a
-                  href="https://www.themewagon.com/" target="_blank">ThemeWagon</a></span>
-              <span class="float-none float-sm-right d-block mt-1 mt-sm-0 text-center"> Free <a
-                  href="https://www.bootstrapdash.com/" target="_blank">Bootstrap dashboard templates</a> from
-                Bootstrapdash.com</span>
+
+        </div>
+        <!-- content-wrapper ends -->
+        <!-- partial:./partials/_footer.html -->
+        <footer class="footer">
+          <div class="card">
+            <div class="card-body">
+              <div class="d-sm-flex justify-content-center justify-content-sm-between">
+                <span class="text-muted d-block text-center text-sm-left d-sm-inline-block">Copyright ©
+                  bootstrapdash.com
+                  2020</span>
+                <span class="text-muted d-block text-center text-sm-left d-sm-inline-block">Distributed By: <a
+                    href="https://www.themewagon.com/" target="_blank">ThemeWagon</a></span>
+                <span class="float-none float-sm-right d-block mt-1 mt-sm-0 text-center"> Free <a
+                    href="https://www.bootstrapdash.com/" target="_blank">Bootstrap dashboard templates</a> from
+                  Bootstrapdash.com</span>
+              </div>
             </div>
           </div>
-        </div>
-      </footer>
-      <!-- partial -->
+        </footer>
+        <!-- partial -->
+      </div>
+      <!-- main-panel ends -->
     </div>
-    <!-- main-panel ends -->
-  </div>
-  <!-- page-body-wrapper ends -->
+    <!-- page-body-wrapper ends -->
   </div>
   <!-- container-scroller -->
 

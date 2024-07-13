@@ -26,5 +26,17 @@
         }
     }
 
+    function empityData()
+    {
+        if(isset($_SESSION['empitydata']))
+        {
+            echo '
+            <div style="color:red">
+                '.$_SESSION['empitydata'].'
+            </div>';
+             unset($_SESSION['empitydata']) ;
+        }
+    }
+
 
 ?>

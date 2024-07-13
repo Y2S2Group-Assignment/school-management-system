@@ -79,17 +79,17 @@
                                                 ?>
                                                 <tr>
                                                     <td class="py-1">
-                                                        <?= $i++ ?>.
+                                                        <b><?= $i++ ?>.</b>
                                                         
                                                     </td>
                                                     <td>
-                                                        <?= $row['BatchKH'] ?>
+                                                        <b><?= $row['BatchKH'] ?></b>
                                                     </td>
                                                     <td>
-                                                        <?= $row['BatchEN'] ?>
+                                                        <b><?= $row['BatchEN'] ?></b>
                                                     </td>
                                                     <td>
-                                                        <?= $row['datetime'] ?>
+                                                        <b><?= $row['datetime'] ?></b>
                                                     </td>
                                                     <td>
                                                         <a href="c_batch.php?edit_batch=<?php echo $row['BatchID'] ?> ">

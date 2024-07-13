@@ -2,7 +2,13 @@
 <html lang="en">
 
 <?php
+require('function.php');
 include ('./include/header.php');
+
+
+
+
+$StudentID = null;
 ?>
 
 <body>
@@ -19,76 +25,76 @@ include ('./include/header.php');
       include ('./include/nav.php');
       ?>
 
-<?php
-include './connection/conn.php';
-                if (isset($_GET['stuFamily'])) {
-                  $stu = $_GET['stuFamily'];
-                  $query = "SELECT * FROM tblfamilybackground WHERE StudentID = $stu";
-                  $result = mysqli_query($conn, $query);
+      <?php
+  
+      include './connection/conn.php';
+      if (isset($_GET['stuFamily'])) {
+        $stu = $_GET['stuFamily'];
+        $query = "SELECT * FROM tblfamilybackground WHERE StudentID = $stu";
+        $result = mysqli_query($conn, $query);
 
-                  // Check if the query returned any result
-                  if ($result) {
-                    $row = mysqli_fetch_assoc($result);
+        // Check if the query returned any result
+        if ($result) {
+          $row = mysqli_fetch_assoc($result);
 
-                    if ($row) {
-                        $StudentID = $row['StudentID'];
-                      $FatherNationalityID = $row['FatherNationalityID'];
-                      
-                      $FatherCountryID = $row['FatherCountryID'];
-                      $FatherOccupationID = $row['FatherOccupationID'];
+          if ($row) {
+            $StudentID = $row['StudentID'];
+            $FatherNationalityID = $row['FatherNationalityID'];
 
-                      $MotherNationalityID = $row['MotherNationalityID'];
-                     
-                      $MotherCountryID = $row['MotherCountryID'];
-                      $MotherOccupationID = $row['MotherOccupationID'];
-                      
-                    } else {
-                      echo "No student found with the provided ID.";
-                    }
-                  } else {
-                    echo "Error executing query: " . mysqli_error($conn);
-                  }
-                }
-                ?>
+            $FatherCountryID = $row['FatherCountryID'];
+            $FatherOccupationID = $row['FatherOccupationID'];
+
+            $MotherNationalityID = $row['MotherNationalityID'];
+
+            $MotherCountryID = $row['MotherCountryID'];
+            $MotherOccupationID = $row['MotherOccupationID'];
+
+          } else {
+            $_SESSION['empitydata'] = "Data is empity !";
+          }
+        } else {
+          $_SESSION['empitydata'] = "Data is empity !";
+        }
+      }
+      
+      ?>
       <!-- partial -->
       <div class="main-panel">
 
         <div class="content-wrapper">
 
-        <div class="col-12 grid-margin stretch-card">
-              <div class="card">
-                <div class="row">
-                  <div class="col-md-12">
-                    <div class="card-body">
-                      <h4 class="card-title">All About Students</h4>
-                      
-                      <div class="template-demo">
-                        <a href="stuDetail.php?stuDetail=<?php echo $row['StudentID'] ?>">
-                          <button type="button" class="btn btn-outline-primary btn-fw">Student Information</button>
-                        </a>
-                        <a href="stuEdu.php?stuEdu=<?php echo $row['StudentID'] ?>">
+          <div class="col-12 grid-margin stretch-card">
+            <div class="card">
+              <div class="row">
+                <div class="col-md-12">
+                  <div class="card-body">
+                    <h4 class="card-title">All About Students</h4>
+
+                    <div class="template-demo">
+                    <a href="stuDetail.php?stuDetail=<?php echo $row['StudentID'] ?>">
+                        <button type="button" class="btn btn-outline-primary btn-fw">Student Information</button>
+                      </a>
+                      <a href="stuEdu.php?stuEdu=<?php echo $row['StudentID'] ?>">
                         <button type="button" class="btn btn-outline-secondary btn-fw">Student Educational</button>
-                        </a>
-                        <a href="stuFamily.php?stuFamily=<?php echo $row['StudentID'] ?>">
+                      </a>
+
+
+                      <a href="stuFamily.php?stuFamily=<?php echo $row['StudentID'] ?>">
                         <button type="button" class="btn btn-outline-success btn-fw">Student Family Background</button>
-                        </a>
-                       
-                       
-                        
+                      </a>
                      
-                        <a href="stuSubject.php?stuSubject=<?php echo $row['StudentID'] ?>">
+                      <a href="stuSubject.php?stuSubject=<?php echo $row['StudentID'] ?>">
                       <button type="button" class="btn btn-outline-secondary btn-fw">Student Subjects</button>
                       </a>
-                        <!-- <button type="button" class="btn btn-outline-success btn-fw">Success</button>
-                        <button type="button" class="btn btn-outline-secondary btn-fw">Secondary</button>
-                        <button type="button" class="btn btn-outline-success btn-fw">Success</button> -->
-                       
-                      </div>
+                    
+
                     </div>
+                  
                   </div>
-                  </div>
-                  </div>
-                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
 
 
           <div class="col-12 grid-margin">
@@ -98,9 +104,13 @@ include './connection/conn.php';
 
                 <h4 class="card-title">Student Family Background</h4>
 
+                <?php
+                empityData();
+                ?>
+              
+                <hr>
+              
 
-<hr>
-                
 
                 <div class="row pt-2">
                   <div class="col-md-4">
@@ -123,101 +133,103 @@ include './connection/conn.php';
                   </div>
                 </div>
 
-                <?php 
-                        //  include_once 'Connection.php';
-                  $select_menu = "SELECT * FROM tblstudentstatus WHERE StudentID = $StudentID";
-                  $resultMenu =mysqli_query($conn,$select_menu);
-                  while( $row_data=mysqli_fetch_assoc($resultMenu)){
-                      $ProgramID = $row_data['ProgramID'];
-                    ?> 
+                <?php
+                //  if (isset($StudentID)) {
+               
+                $select_menu = "SELECT * FROM tblstudentstatus WHERE StudentID = $StudentID AND Status = 1";
+                $resultMenu = mysqli_query($conn, $select_menu);
+                while ($row_data = mysqli_fetch_assoc($resultMenu)) {
+                  $ProgramID = $row_data['ProgramID'];
+                  ?>
 
-                <?php   
-                      $subselect_menu = "SELECT * FROM tblprogram WHERE ProgramID=$ProgramID ";
-                      $subresultMenu=mysqli_query($conn,$subselect_menu);
-                      while( $subrow_data=mysqli_fetch_assoc($subresultMenu)){
-                          $YearID = $subrow_data['YearID'];
-                          $SemesterID = $subrow_data['SemesterID'];
-                          $ShiftID = $subrow_data['ShiftID'];
-                          $DegreeID = $subrow_data['DegreeID'];
-                          $AcademicYearID = $subrow_data['AcademicYearID'];
-                          $MajorID = $subrow_data['MajorID'];
-                          $BatchID = $subrow_data['BatchID'];
-                          $CampusID = $subrow_data['CampusID'];
-                      ?>
-                      <br><label for="exampleInputUsername1">Student Program: </label>
-                        <?php
-                        if (isset($YearID )) {
-                          $subselect_menu1 = "SELECT * FROM tblyear WHERE YearID = $YearID";
-                          $subresultMenu1 = mysqli_query($conn, $subselect_menu1);
+                  <?php
+                  $subselect_menu = "SELECT * FROM tblprogram WHERE ProgramID=$ProgramID ";
+                  $subresultMenu = mysqli_query($conn, $subselect_menu);
+                  while ($subrow_data = mysqli_fetch_assoc($subresultMenu)) {
+                    $YearID = $subrow_data['YearID'];
+                    $SemesterID = $subrow_data['SemesterID'];
+                    $ShiftID = $subrow_data['ShiftID'];
+                    $DegreeID = $subrow_data['DegreeID'];
+                    $AcademicYearID = $subrow_data['AcademicYearID'];
+                    $MajorID = $subrow_data['MajorID'];
+                    $BatchID = $subrow_data['BatchID'];
+                    $CampusID = $subrow_data['CampusID'];
+                    ?>
+                    <br><label for="exampleInputUsername1">Student Program: </label>
+                    <?php
+                    if (isset($YearID)) {
+                      $subselect_menu1 = "SELECT * FROM tblyear WHERE YearID = $YearID";
+                      $subresultMenu1 = mysqli_query($conn, $subselect_menu1);
 
-                          while ($row_subdata1 = mysqli_fetch_assoc($subresultMenu1)) {
-                            echo "<b>" . $row_subdata1['YearEN'] .'/'. "</b>";
-                          }
-                        }
-                        if (isset($SemesterID )) {
-                          $subselect_menu1 = "SELECT * FROM tblsemester WHERE SemesterID = $SemesterID";
-                          $subresultMenu1 = mysqli_query($conn, $subselect_menu1);
+                      while ($row_subdata1 = mysqli_fetch_assoc($subresultMenu1)) {
+                        echo "<b>" . $row_subdata1['YearEN'] . '/' . "</b>";
+                      }
+                    }
+                    if (isset($SemesterID)) {
+                      $subselect_menu1 = "SELECT * FROM tblsemester WHERE SemesterID = $SemesterID";
+                      $subresultMenu1 = mysqli_query($conn, $subselect_menu1);
 
-                          while ($row_subdata1 = mysqli_fetch_assoc($subresultMenu1)) {
-                            echo "<b>" . $row_subdata1['SemesterEN'] .'/'. "</b>";
-                          }
-                        }
-                        if (isset($ShiftID )) {
-                          $subselect_menu1 = "SELECT * FROM tblshift WHERE ShiftID = $ShiftID";
-                          $subresultMenu1 = mysqli_query($conn, $subselect_menu1);
+                      while ($row_subdata1 = mysqli_fetch_assoc($subresultMenu1)) {
+                        echo "<b>" . $row_subdata1['SemesterEN'] . '/' . "</b>";
+                      }
+                    }
+                    if (isset($ShiftID)) {
+                      $subselect_menu1 = "SELECT * FROM tblshift WHERE ShiftID = $ShiftID";
+                      $subresultMenu1 = mysqli_query($conn, $subselect_menu1);
 
-                          while ($row_subdata1 = mysqli_fetch_assoc($subresultMenu1)) {
-                            echo "<b>" . $row_subdata1['ShiftEN'] .'/'. "</b>";
-                          }
-                        }
-                        if (isset($DegreeID )) {
-                          $subselect_menu1 = "SELECT * FROM tbldegree WHERE DegreeID = $DegreeID";
-                          $subresultMenu1 = mysqli_query($conn, $subselect_menu1);
+                      while ($row_subdata1 = mysqli_fetch_assoc($subresultMenu1)) {
+                        echo "<b>" . $row_subdata1['ShiftEN'] . '/' . "</b>";
+                      }
+                    }
+                    if (isset($DegreeID)) {
+                      $subselect_menu1 = "SELECT * FROM tbldegree WHERE DegreeID = $DegreeID";
+                      $subresultMenu1 = mysqli_query($conn, $subselect_menu1);
 
-                          while ($row_subdata1 = mysqli_fetch_assoc($subresultMenu1)) {
-                            echo "<b>" . $row_subdata1['DegreeNameEN'] .'/'. "</b>";
-                          }
-                        }
-                        if (isset($AcademicYearID )) {
-                          $subselect_menu1 = "SELECT * FROM tblacademicyear WHERE AcademicYearID = $AcademicYearID";
-                          $subresultMenu1 = mysqli_query($conn, $subselect_menu1);
+                      while ($row_subdata1 = mysqli_fetch_assoc($subresultMenu1)) {
+                        echo "<b>" . $row_subdata1['DegreeNameEN'] . '/' . "</b>";
+                      }
+                    }
+                    if (isset($AcademicYearID)) {
+                      $subselect_menu1 = "SELECT * FROM tblacademicyear WHERE AcademicYearID = $AcademicYearID";
+                      $subresultMenu1 = mysqli_query($conn, $subselect_menu1);
 
-                          while ($row_subdata1 = mysqli_fetch_assoc($subresultMenu1)) {
-                            echo "<b>" . $row_subdata1['AcademicYear'] .'/'. "</b>";
-                          }
-                        }
-                        if (isset($MajorID )) {
-                          $subselect_menu1 = "SELECT * FROM tblmajor WHERE MajorID = $MajorID";
-                          $subresultMenu1 = mysqli_query($conn, $subselect_menu1);
+                      while ($row_subdata1 = mysqli_fetch_assoc($subresultMenu1)) {
+                        echo "<b>" . $row_subdata1['AcademicYear'] . '/' . "</b>";
+                      }
+                    }
+                    if (isset($MajorID)) {
+                      $subselect_menu1 = "SELECT * FROM tblmajor WHERE MajorID = $MajorID";
+                      $subresultMenu1 = mysqli_query($conn, $subselect_menu1);
 
-                          while ($row_subdata1 = mysqli_fetch_assoc($subresultMenu1)) {
-                            echo "<b>" . $row_subdata1['MajorEN'] .'/'. "</b>";
-                          }
-                        }
-                        if (isset($BatchID )) {
-                          $subselect_menu1 = "SELECT * FROM tblbatch WHERE BatchID = $BatchID";
-                          $subresultMenu1 = mysqli_query($conn, $subselect_menu1);
+                      while ($row_subdata1 = mysqli_fetch_assoc($subresultMenu1)) {
+                        echo "<b>" . $row_subdata1['MajorEN'] . '/' . "</b>";
+                      }
+                    }
+                    if (isset($BatchID)) {
+                      $subselect_menu1 = "SELECT * FROM tblbatch WHERE BatchID = $BatchID";
+                      $subresultMenu1 = mysqli_query($conn, $subselect_menu1);
 
-                          while ($row_subdata1 = mysqli_fetch_assoc($subresultMenu1)) {
-                            echo "<b>" . $row_subdata1['BatchEN'] .'/'. "</b>";
-                          }
-                        }
-                        if (isset($SemesterID )) {
-                          $subselect_menu1 = "SELECT * FROM tblcampus WHERE CampusID = $CampusID";
-                          $subresultMenu1 = mysqli_query($conn, $subselect_menu1);
+                      while ($row_subdata1 = mysqli_fetch_assoc($subresultMenu1)) {
+                        echo "<b>" . $row_subdata1['BatchEN'] . '/' . "</b>";
+                      }
+                    }
+                    if (isset($SemesterID)) {
+                      $subselect_menu1 = "SELECT * FROM tblcampus WHERE CampusID = $CampusID";
+                      $subresultMenu1 = mysqli_query($conn, $subselect_menu1);
 
-                          while ($row_subdata1 = mysqli_fetch_assoc($subresultMenu1)) {
-                            echo "<b>" . $row_subdata1['CampusEN'] .'.'. "</b>";
-                          }
-                        }
-                        
-                        ?>
-                      
-                    <?php } ?>           
+                      while ($row_subdata1 = mysqli_fetch_assoc($subresultMenu1)) {
+                        echo "<b>" . $row_subdata1['CampusEN'] . '.' . "</b>";
+                      }
+                    }
+
+                    ?>
+
                   <?php } ?>
-
                   
-<hr>
+                <?php } ?>
+                    
+
+                <hr>
                 <div class="row ">
                   <div class="col-md-4">
                     <div class="form-group row">
@@ -258,8 +270,8 @@ include './connection/conn.php';
 
                 <div class="row">
                   <div class="col-md-4">
-                  <div class="form-group row">
-                  <div class="col-sm-12">
+                    <div class="form-group row">
+                      <div class="col-sm-12">
                         <label for="exampleInputUsername1">Father Country: </label>
                         <?php
                         if (isset($FatherCountryID)) {
@@ -272,7 +284,7 @@ include './connection/conn.php';
                         }
                         ?>
                       </div>
-                      </div>
+                    </div>
                   </div>
                   <div class="col-md-4">
                     <div class="form-group row">
@@ -301,7 +313,7 @@ include './connection/conn.php';
                   </div>
                 </div>
                 <div class="row">
-                  
+
                   <div class="col-md-4">
                     <div class="form-group row">
                       <div class="col-sm-12">
@@ -310,7 +322,7 @@ include './connection/conn.php';
                       </div>
                     </div>
                   </div>
-                 
+
                   <div class="col-md-4">
                     <div class="form-group row">
                       <div class="col-sm-12">
@@ -348,7 +360,7 @@ include './connection/conn.php';
                 </div>
 
                 <div class="row">
-                <div class="col-md-4">
+                  <div class="col-md-4">
                     <div class="form-group row">
                       <div class="col-sm-12">
                         <label for="exampleInputUsername1">Mother Occupation:</label>
@@ -384,7 +396,7 @@ include './connection/conn.php';
                 </div>
 
                 <div class="row">
-                 
+
                   <div class="col-md-4">
                     <div class="form-group row">
                       <div class="col-sm-12">
@@ -406,7 +418,7 @@ include './connection/conn.php';
 
 
 
-                
+
 
 
               </div>
